@@ -52,8 +52,9 @@ export function buildPattern(
       inner = `<polygon points="${sz / 2},2 ${sz - 2},${sz - 2} 2,${sz - 2}" fill="none" ${stroke} stroke-width="1"/>`;
       break;
     case "wave":
-      inner = `<path d="M0 ${sz / 2} Q${sz / 4} 0 ${sz / 2} ${sz / 2} T${sz} ${sz / 2}" fill="none" ${stroke} stroke-width="1.2"/>`;
+      inner = `<path d="M0 ${sz * 0.3} Q${sz * 0.25} ${sz * 0.05} ${sz * 0.5} ${sz * 0.3} T${sz} ${sz * 0.3} M0 ${sz * 0.7} Q${sz * 0.25} ${sz * 0.45} ${sz * 0.5} ${sz * 0.7} T${sz} ${sz * 0.7}" fill="none" ${stroke} stroke-width="1.2"/>`;
       break;
+
     case "noise":
       inner = Array.from({ length: 12 }, (_, i) => {
         const x = (i * 7) % sz;

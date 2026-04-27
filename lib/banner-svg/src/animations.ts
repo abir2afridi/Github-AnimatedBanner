@@ -14,7 +14,8 @@ const KEYFRAMES: Record<string, string> = {
   float: `@keyframes bf-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}`,
   pulse: `@keyframes bf-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.7;transform:scale(0.97)}}`,
   bounce: `@keyframes bf-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}`,
-  waveText: `@keyframes bf-waveText{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}`,
+  waveText: `@keyframes bf-waveText{0%,100%{transform:translate(0,0)}25%{transform:translate(2px,-4px)}50%{transform:translate(0,-8px)}75%{transform:translate(-2px,-4px)}}`,
+
   ripple: `@keyframes bf-ripple{0%{transform:scale(0.9);opacity:1}100%{transform:scale(1.1);opacity:0}}`,
   sparkle: `@keyframes bf-sparkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}`,
   rotate: `@keyframes bf-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`,
@@ -22,21 +23,25 @@ const KEYFRAMES: Record<string, string> = {
   neonFlicker: `@keyframes bf-neonFlicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,24%,55%{opacity:0.4}}`,
   colorShift: `@keyframes bf-colorShift{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}`,
   reveal: `@keyframes bf-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}`,
+  bgWave: `@keyframes bf-bgWave{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`,
 };
+
 
 const DURATION: Record<string, number> = {
   fadeIn: 1.2, scaleIn: 0.8, slideInLeft: 0.7, slideInRight: 0.7,
   slideInTop: 0.6, slideInBottom: 0.6, blink: 1.5, twinkling: 3,
   typewriter: 2, glitch: 0.5, float: 3, pulse: 2, bounce: 1,
   waveText: 1.5, ripple: 2, sparkle: 1.5, rotate: 8, shake: 0.5,
-  neonFlicker: 2.5, colorShift: 6, reveal: 1.5,
+  neonFlicker: 2.5, colorShift: 6, reveal: 1.5, bgWave: 4,
 };
+
 
 const INFINITE = new Set([
   "blink", "twinkling", "float", "pulse", "bounce",
   "rotate", "neonFlicker", "colorShift", "waveText",
-  "ripple", "sparkle", "glitch", "shake",
+  "ripple", "sparkle", "glitch", "shake", "bgWave",
 ]);
+
 
 export interface AnimSpec {
   animation: AnimationType;

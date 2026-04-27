@@ -29,7 +29,7 @@ export function generateBannerSVG(params: BannerParams): string {
 
   // 2. Shape
   const shapeFn = SHAPES[params.type] ?? SHAPES.rect;
-  const shape = shapeFn(w, h, `url(#${bgGradId})`);
+  const shape = shapeFn(w, h, `url(#${bgGradId})`, params.animationSpeed);
 
   // 3. Pattern overlay (over shape)
   const pattern = buildPattern(
@@ -91,6 +91,8 @@ export function generateBannerSVG(params: BannerParams): string {
       }),
     )
     .join("\n");
+  
+
 
   // 9. Fonts
   const fontImport = getFontImportCSS(params.textLayers.map((l) => l.fontFamily));
@@ -101,6 +103,7 @@ export function generateBannerSVG(params: BannerParams): string {
     .bf-canvas { ${compositeFilter ? `filter:${compositeFilter};` : ""} }
     ${animCSS}
   </style>`;
+
 
   // 11. Build final SVG
   const defs = `<defs>

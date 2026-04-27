@@ -2,6 +2,15 @@
 
 A GitHub README banner generator that produces animated SVG banners via a URL API and a drag‑style builder UI with live preview.
 
+## ✨ Key Features
+
+- **🚀 Performance-First**: Zero runtime dependencies in the generator library. Works identically on the server and in the browser.
+- **🎨 Infinite Customization**: 35+ shape types, 20+ animations, and 15+ color presets.
+- **⚡ Live Preview**: The builder UI provides a byte-identical preview of the API output.
+- **📱 Responsive Design**: Optimized for all screen sizes.
+- **🔗 Seamless Integration**: Simply copy the URL or Markdown and paste it into your GitHub README.
+- **⏱️ Variable Speed**: Control the frequency of waving and other animations via a dedicated speed parameter.
+
 ## Architecture
 
 This is a `pnpm` monorepo with three artifacts and one shared library:
@@ -94,7 +103,7 @@ The builder will be available at http://localhost:5173/
 pnpm --filter @workspace/api-server dev
 ```
 
-The API server will typically run on port 3000 (if configured by environment).
+The API server defaults to port 3000 if no `PORT` environment variable is provided.
 
 #### Run UI + API together (recommended)
 
@@ -117,9 +126,33 @@ npm run dev:sandbox
 
 ### Environment Variables
 
-The frontend supports the following environment variables:
-- `PORT` (default: 5173)
-- `BASE_PATH` (default: `/`)
+Both the frontend and API server support environment variables for configuration.
+
+| Variable | Default | Target | Description |
+| :--- | :--- | :--- | :--- |
+| `PORT` | `5173` | Frontend | Port for the Vite dev server. |
+| `PORT` | `3000` | API Server | Port for the Express backend. |
+| `BASE_PATH` | `/` | Frontend | The base path for the frontend application. |
+
+#### Setting Variables on Windows (PowerShell)
+
+```powershell
+# For Frontend
+$env:PORT="5173"; $env:BASE_PATH="/"; npm run dev:bannerforge
+
+# For API Server
+$env:PORT="3000"; npm run dev:api
+```
+
+#### Setting Variables on macOS/Linux
+
+```bash
+# For Frontend
+PORT=5173 BASE_PATH=/ npm run dev:bannerforge
+
+# For API Server
+PORT=3000 npm run dev:api
+```
 
 If you want to override them:
 
@@ -146,14 +179,14 @@ This will typecheck and build all workspace packages.
 ### Troubleshooting
 
 - If `pnpm` is not recognized on Windows after installing globally, use `npx pnpm ...` or restart the terminal.
-- If `npm run dev:all` stops immediately, run `npm run dev:api` alone to see the API error output.
+- If `npm run dev:all` fails with a "PORT environment variable is required" error, ensure you are using the latest version of the code where a fallback to port 3000 has been implemented.
+- If the API server still fails to start, you can manually set the port: `$env:PORT="3000"; npm run dev:api`.
 
 ### Deployment
 
 The project is deployed on Vercel:
 
-- **Production:** https://github-animated-banner-e7bg60pzv-abir2afridi-5746s-projects.vercel.app
-- **Alias:** https://github-animated-banner-seven.vercel.app
+- **Production:** https://github-animatedbanner.vercel.app/
 
 To deploy to Vercel:
 
@@ -167,7 +200,7 @@ The project uses a `vercel.json` configuration file that:
 - Sets the build command to build the bannerforge artifact
 - Configures the output directory to `artifacts/bannerforge/dist/public`
 - Uses `npx pnpm` for installation and build commands
-- Includes environment variables for PORT (5173) and BASE_PATH (/)
+- Includes environment variables for `BASE_PATH` (default: `/`)
 
 ## URL API
 

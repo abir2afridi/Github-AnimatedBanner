@@ -6,62 +6,110 @@ export interface ShapeOutput {
   viewBox: string;
 }
 
-export type ShapeFn = (w: number, h: number, fill: string) => ShapeOutput;
+export type ShapeFn = (w: number, h: number, fill: string, speed: number) => ShapeOutput;
+
 
 const rectFill = (w: number, h: number, fill: string) =>
   `<rect width="${w}" height="${h}" fill="${fill}"/>`;
 
-const waving: ShapeFn = (w, h, fill) => {
-  const amp = h * 0.18;
-  const path = `M0,${h * 0.55}
-    C${w * 0.2},${h * 0.55 - amp} ${w * 0.4},${h * 0.55 + amp} ${w * 0.6},${h * 0.55}
-    S${w},${h * 0.55 + amp} ${w},${h * 0.55}
-    L${w},${h} L0,${h} Z`;
+const waving: ShapeFn = (w, h, fill, speed) => {
+  const dur = (12 / (speed || 1)).toFixed(1);
+  const dur2 = (8 / (speed || 1)).toFixed(1);
+  const dur3 = (15 / (speed || 1)).toFixed(1);
+
+  // Generate a smooth wave path using a series of points
+  const getWavePath = (yOffset: number, amplitude: number, phase: number, segments: number = 8) => {
+    let path = `M0 0 L0 ${yOffset}`;
+    for (let i = 0; i <= segments; i++) {
+      const x = (w / segments) * i;
+      // Use sine for a smoother, more natural wave
+      const y = yOffset + Math.sin((i / segments) * Math.PI * 2 + phase) * amplitude;
+      path += ` L${x} ${y}`;
+    }
+    path += ` L${w} 0 Z`;
+    return path;
+  };
+
+  // Base paths for morphing (3 states for smoother flow)
+  const l1_a = getWavePath(h * 0.7, h * 0.08, 0);
+  const l1_b = getWavePath(h * 0.7, h * 0.08, Math.PI * 0.66);
+  const l1_c = getWavePath(h * 0.7, h * 0.08, Math.PI * 1.33);
+  
+  const l2_a = getWavePath(h * 0.75, h * 0.06, Math.PI * 0.5);
+  const l2_b = getWavePath(h * 0.75, h * 0.06, Math.PI * 1.16);
+  const l2_c = getWavePath(h * 0.75, h * 0.06, Math.PI * 1.83);
+  
+  const l3_a = getWavePath(h * 0.65, h * 0.1, Math.PI * 1.2);
+  const l3_b = getWavePath(h * 0.65, h * 0.1, Math.PI * 1.86);
+  const l3_c = getWavePath(h * 0.65, h * 0.1, Math.PI * 0.53);
+
   return {
     defs: "",
-    background: `<rect width="${w}" height="${h}" fill="${fill}" opacity="0.25"/>
-      <path d="${path}" fill="${fill}"/>`,
+    background: `
+      <!-- Solid base -->
+      <rect width="${w}" height="${h * 0.5}" fill="${fill}" />
+      
+      <!-- Back Wave -->
+      <path d="${l3_a}" fill="${fill}" opacity="0.3">
+        <animate attributeName="d" dur="${dur3}s" repeatCount="indefinite"
+          values="${l3_a};${l3_b};${l3_c};${l3_a}" />
+      </path>
+
+      <!-- Mid Wave -->
+      <path d="${l2_a}" fill="${fill}" opacity="0.5">
+        <animate attributeName="d" dur="${dur2}s" repeatCount="indefinite"
+          values="${l2_a};${l2_b};${l2_c};${l2_a}" />
+      </path>
+
+      <!-- Front Wave -->
+      <path d="${l1_a}" fill="${fill}" opacity="0.8" stroke="white" stroke-opacity="0.2" stroke-width="2">
+        <animate attributeName="d" dur="${dur}s" repeatCount="indefinite"
+          values="${l1_a};${l1_b};${l1_c};${l1_a}" />
+      </path>
+    `,
     viewBox: `0 0 ${w} ${h}`,
   };
 };
 
-const rect: ShapeFn = (w, h, fill) => ({
+
+
+const rect: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: rectFill(w, h, fill),
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const rounded: ShapeFn = (w, h, fill) => ({
+const rounded: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<rect width="${w}" height="${h}" rx="20" ry="20" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const soft: ShapeFn = (w, h, fill) => ({
+const soft: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<rect width="${w}" height="${h}" rx="40" ry="40" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const wave: ShapeFn = (w, h, fill) => {
+const wave: ShapeFn = (w, h, fill, speed) => {
   const amp = h * 0.12;
   const path = `M0,${amp} Q${w * 0.25},0 ${w * 0.5},${amp} T${w},${amp} L${w},${h} L0,${h} Z`;
   return { defs: "", background: `<path d="${path}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const wave2: ShapeFn = (w, h, fill) => {
+const wave2: ShapeFn = (w, h, fill, speed) => {
   const a = h * 0.1;
   const path = `M0,${h - a} Q${w * 0.25},${h} ${w * 0.5},${h - a} T${w},${h - a} L${w},0 L0,0 Z`;
   return { defs: "", background: `<path d="${path}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const slice: ShapeFn = (w, h, fill) => ({
+const slice: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<polygon points="0,0 ${w},0 ${w},${h * 0.7} 0,${h}" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const blob: ShapeFn = (w, h, fill) => {
+const blob: ShapeFn = (w, h, fill, speed) => {
   const path = `M0,${h * 0.4}
     C${w * 0.15},${h * 0.1} ${w * 0.35},${h * 0.7} ${w * 0.55},${h * 0.4}
     S${w * 0.85},${h * 0.1} ${w},${h * 0.4}
@@ -69,14 +117,14 @@ const blob: ShapeFn = (w, h, fill) => {
   return { defs: "", background: `<path d="${path}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const blob2: ShapeFn = (w, h, fill) => {
+const blob2: ShapeFn = (w, h, fill, speed) => {
   const path = `M0,0 L${w},0 L${w},${h * 0.6}
     C${w * 0.75},${h * 0.95} ${w * 0.5},${h * 0.4} ${w * 0.25},${h * 0.75}
     S0,${h * 0.55} 0,${h * 0.6} Z`;
   return { defs: "", background: `<path d="${path}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const circle: ShapeFn = (w, h, fill) => {
+const circle: ShapeFn = (w, h, fill, speed) => {
   const r = Math.min(w, h) * 0.45;
   return {
     defs: "",
@@ -85,7 +133,7 @@ const circle: ShapeFn = (w, h, fill) => {
   };
 };
 
-const cylinder: ShapeFn = (w, h, fill) => ({
+const cylinder: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<rect x="0" y="${h * 0.1}" width="${w}" height="${h * 0.8}" fill="${fill}"/>
     <ellipse cx="${w / 2}" cy="${h * 0.1}" rx="${w / 2}" ry="${h * 0.1}" fill="${fill}"/>
@@ -93,37 +141,37 @@ const cylinder: ShapeFn = (w, h, fill) => ({
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const diamond: ShapeFn = (w, h, fill) => ({
+const diamond: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<polygon points="${w / 2},0 ${w},${h / 2} ${w / 2},${h} 0,${h / 2}" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const triangle: ShapeFn = (w, h, fill) => ({
+const triangle: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<polygon points="${w / 2},0 ${w},${h} 0,${h}" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const trapezoid: ShapeFn = (w, h, fill) => ({
+const trapezoid: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<polygon points="${w * 0.15},0 ${w * 0.85},0 ${w},${h} 0,${h}" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const arrow: ShapeFn = (w, h, fill) => ({
+const arrow: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<polygon points="0,0 ${w * 0.85},0 ${w},${h / 2} ${w * 0.85},${h} 0,${h}" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const ribbon: ShapeFn = (w, h, fill) => ({
+const ribbon: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<path d="M0,${h * 0.2} L${w},0 L${w},${h * 0.8} L0,${h} Z" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const hexagon: ShapeFn = (w, h, fill) => {
+const hexagon: ShapeFn = (w, h, fill, speed) => {
   const cx = w / 2;
   const cy = h / 2;
   const r = Math.min(w, h) * 0.47;
@@ -134,14 +182,14 @@ const hexagon: ShapeFn = (w, h, fill) => {
   return { defs: "", background: `<polygon points="${pts}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const shield: ShapeFn = (w, h, fill) => {
+const shield: ShapeFn = (w, h, fill, speed) => {
   const path = `M${w / 2},${h} C${w / 2},${h} ${w * 0.05},${h * 0.7} ${w * 0.05},${h * 0.35}
     L${w * 0.05},${h * 0.1} L${w / 2},0 L${w * 0.95},${h * 0.1}
     L${w * 0.95},${h * 0.35} C${w * 0.95},${h * 0.7} ${w / 2},${h} ${w / 2},${h} Z`;
   return { defs: "", background: `<path d="${path}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const speech: ShapeFn = (w, h, fill) => {
+const speech: ShapeFn = (w, h, fill, speed) => {
   const path = `M${w * 0.05},0 L${w * 0.95},0 Q${w},0 ${w},${h * 0.05}
     L${w},${h * 0.75} Q${w},${h * 0.85} ${w * 0.95},${h * 0.85}
     L${w * 0.35},${h * 0.85} L${w * 0.2},${h} L${w * 0.3},${h * 0.85}
@@ -150,7 +198,7 @@ const speech: ShapeFn = (w, h, fill) => {
   return { defs: "", background: `<path d="${path}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
 };
 
-const lightning: ShapeFn = (w, h, fill) => {
+const lightning: ShapeFn = (w, h, fill, speed) => {
   const path = `M${w * 0.55},0 L${w * 0.3},${h * 0.45} L${w * 0.5},${h * 0.45} L${w * 0.45},${h} L${w * 0.7},${h * 0.55} L${w * 0.5},${h * 0.55} Z`;
   return {
     defs: "",
@@ -160,14 +208,14 @@ const lightning: ShapeFn = (w, h, fill) => {
   };
 };
 
-const mountain: ShapeFn = (w, h, fill) => ({
+const mountain: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<rect width="${w}" height="${h}" fill="${fill}" opacity="0.3"/>
     <polygon points="0,${h} ${w * 0.3},${h * 0.4} ${w * 0.45},${h * 0.6} ${w * 0.65},${h * 0.25} ${w},${h}" fill="${fill}"/>`,
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const city: ShapeFn = (w, h, fill) => {
+const city: ShapeFn = (w, h, fill, speed) => {
   const buildings = [];
   let x = 0;
   while (x < w) {
@@ -184,7 +232,7 @@ const city: ShapeFn = (w, h, fill) => {
   };
 };
 
-const terminal: ShapeFn = (w, h, fill) => ({
+const terminal: ShapeFn = (w, h, fill, speed) => ({
   defs: "",
   background: `<rect width="${w}" height="${h}" rx="10" fill="${fill}"/>
     <rect x="0" y="0" width="${w}" height="${h * 0.14}" rx="10" fill="rgba(0,0,0,0.4)"/>
@@ -195,7 +243,7 @@ const terminal: ShapeFn = (w, h, fill) => ({
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const neon: ShapeFn = (w, h, fill) => ({
+const neon: ShapeFn = (w, h, fill, speed) => ({
   defs: `<filter id="neon-glow">
     <feGaussianBlur stdDeviation="4" result="blur"/>
     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -206,7 +254,7 @@ const neon: ShapeFn = (w, h, fill) => ({
   viewBox: `0 0 ${w} ${h}`,
 });
 
-const grid: ShapeFn = (w, h, fill) => {
+const grid: ShapeFn = (w, h, fill, speed) => {
   const lines: string[] = [];
   for (let x = 0; x <= w; x += 30) {
     lines.push(`<line x1="${x}" y1="0" x2="${x}" y2="${h}" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>`);
@@ -221,7 +269,7 @@ const grid: ShapeFn = (w, h, fill) => {
   };
 };
 
-const circuit: ShapeFn = (w, h, fill) => {
+const circuit: ShapeFn = (w, h, fill, speed) => {
   const lines: string[] = [];
   let x = 20;
   while (x < w) {
@@ -245,7 +293,7 @@ const circuit: ShapeFn = (w, h, fill) => {
   };
 };
 
-const matrix: ShapeFn = (w, h, fill) => {
+const matrix: ShapeFn = (w, h, fill, speed) => {
   const chars: string[] = [];
   for (let col = 0; col < w; col += 20) {
     const colHeight = (col % 80) + 40;
@@ -264,7 +312,7 @@ const matrix: ShapeFn = (w, h, fill) => {
   };
 };
 
-const binary: ShapeFn = (w, h, fill) => {
+const binary: ShapeFn = (w, h, fill, speed) => {
   const chars: string[] = [];
   for (let col = 0; col < w; col += 18) {
     for (let row = 0; row < h; row += 18) {

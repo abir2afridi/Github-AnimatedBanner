@@ -128,8 +128,10 @@ function PatternThumb({ type }: { type: PatternType }) {
       backgroundSize: "14px 14px",
     },
     wave: {
-      backgroundImage: "repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 6px)",
+      backgroundImage: "radial-gradient(circle at 50% 0%, transparent 40%, #fff 45%, #fff 55%, transparent 60%)",
+      backgroundSize: "16px 8px",
     },
+
     noise: {
       backgroundImage: "radial-gradient(circle, #fff 0.5px, transparent 0.5px)",
       backgroundSize: "6px 6px",
