@@ -33,41 +33,106 @@ This is a `pnpm` monorepo with three artifacts and one shared library:
 - Node.js (v18 or higher)
 - pnpm package manager
 
+Recommended:
+- Git
+- A terminal that supports PowerShell (Windows) or bash/zsh (macOS/Linux)
+
 ### Setup
 
-1. Install pnpm globally:
+1. Clone the repository:
+
+```bash
+git clone https://github.com/abir2afridi/Github-AnimatedBanner.git
+cd Github-AnimatedBanner
+```
+
+2. Install pnpm globally (recommended):
+
 ```bash
 npm install -g pnpm
 ```
 
-2. Install dependencies:
+If `pnpm` is not available in your terminal, you can still use:
+
+```bash
+npx pnpm -v
+```
+
+3. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
+Or (works even if pnpm isn't on PATH):
+
+```bash
+npx pnpm install
+```
+
 ### Running the Project
 
+If you want the full experience (builder UI + API server), run both together.
+
 #### Frontend (BannerForge Builder)
+
 ```bash
-# Set required environment variables and run
-PORT=5173 BASE_PATH=/ pnpm --filter @workspace/bannerforge dev
+pnpm --filter @workspace/bannerforge dev
 ```
 
 On Windows (PowerShell):
+
 ```powershell
-$env:PORT="5173"; $env:BASE_PATH="/"; pnpm --filter @workspace/bannerforge dev
+pnpm --filter @workspace/bannerforge dev
 ```
 
 The builder will be available at http://localhost:5173/
 
 #### API Server
+
 ```bash
-PORT=3000 BASE_PATH=/ pnpm --filter @workspace/api-server dev
+pnpm --filter @workspace/api-server dev
 ```
 
-#### Mockup Sandbox
+The API server will typically run on port 3000 (if configured by environment).
+
+#### Run UI + API together (recommended)
+
+From repo root:
+
 ```bash
-PORT=5174 BASE_PATH=/ pnpm --filter @workspace/mockup-sandbox dev
+npm run dev:all
+```
+
+This starts:
+- `@workspace/bannerforge` (Vite dev server)
+- `@workspace/api-server` (Express server)
+
+#### Mockup Sandbox (optional)
+
+```bash
+npm run dev:sandbox
+```
+
+
+### Environment Variables
+
+The frontend supports the following environment variables:
+- `PORT` (default: 5173)
+- `BASE_PATH` (default: `/`)
+
+If you want to override them:
+
+macOS/Linux:
+
+```bash
+PORT=5173 BASE_PATH=/ pnpm --filter @workspace/bannerforge dev
+```
+
+Windows (PowerShell):
+
+```powershell
+$env:PORT="5173"; $env:BASE_PATH="/"; pnpm --filter @workspace/bannerforge dev
 ```
 
 ### Building for Production
@@ -78,18 +143,25 @@ pnpm build
 
 This will typecheck and build all workspace packages.
 
+### Troubleshooting
+
+- If `pnpm` is not recognized on Windows after installing globally, use `npx pnpm ...` or restart the terminal.
+- If `npm run dev:all` stops immediately, run `npm run dev:api` alone to see the API error output.
+
 ### Deployment
 
 The project is deployed on Vercel:
 
-- **Production:** https://github-animated-banner-2lba8fht1-abir2afridi-5746s-projects.vercel.app
-- **Alias:** https://github-animated-banner-eta.vercel.app
+- **Production:** https://github-animated-banner-e7bg60pzv-abir2afridi-5746s-projects.vercel.app
+- **Alias:** https://github-animated-banner-seven.vercel.app
 
 To deploy to Vercel:
 
 ```bash
 npx vercel deploy --prod
 ```
+
+Local development uses workspace scripts like `npm run dev` or `npm run dev:all`. These are not used by Vercel deployments.
 
 The project uses a `vercel.json` configuration file that:
 - Sets the build command to build the bannerforge artifact

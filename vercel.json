@@ -1,15 +1,15 @@
 {
   "buildCommand": "cd artifacts/bannerforge && npx pnpm build",
-  "outputDirectory": "artifacts/bannerforge/dist/public",
   "installCommand": "npx pnpm install",
+  "outputDirectory": "artifacts/bannerforge/dist/public",
   "framework": null,
+  "env": {
+    "BASE_PATH": "/"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "env": {
-    "BASE_PATH": "/"
-  }
+  ]
 }
