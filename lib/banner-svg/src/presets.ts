@@ -14,7 +14,8 @@ export interface BannerPreset {
     | "Retro"
     | "Neon"
     | "Tech"
-    | "Holiday";
+    | "Holiday"
+    | "Generic";
   params: BannerParams;
 }
 
@@ -89,6 +90,17 @@ export const GALLERY_PRESETS: BannerPreset[] = [
       createDefaultTextLayer({ text: "Aurora", fontFamily: "Cinzel", fontSize: 78, fontWeight: 700, animation: "fadeIn", gradient: true, gradientColors: ["#ffffff", "#92FE9D"] }),
     ],
   }),
+  preset("Glassmorphism", "Featured", {
+    type: "soft",
+    colorPreset: "morning_mist",
+    gradientStops: presetToStops("morning_mist"),
+    overlay: "lightLeak",
+    overlayOpacity: 0.25,
+    textLayers: [
+      createDefaultTextLayer({ text: "Crystal Clear", fontFamily: "Outfit", fontSize: 72, fontWeight: 800, fontColor: "#ffffff", animation: "fadeIn" }),
+      createDefaultTextLayer({ text: "Clean · Modern · Elegant", fontSize: 20, alignY: 78, opacity: 0.8 }),
+    ],
+  }),
 
   // ───────────────────────── Minimal ─────────────────────────
   preset("Minimal Ribbon", "Minimal", {
@@ -139,6 +151,15 @@ export const GALLERY_PRESETS: BannerPreset[] = [
     textLayers: [
       createDefaultTextLayer({ text: "Documentation", fontFamily: "Merriweather", fontSize: 56, fontWeight: 700, fontColor: "#111", animation: "fadeIn" }),
       createDefaultTextLayer({ text: "Read the docs →", fontFamily: "Inter", fontSize: 18, fontColor: "#555", alignY: 78 }),
+    ],
+  }),
+  preset("Abstract Flow", "Minimal", {
+    type: "blob",
+    colorPreset: "monochrome",
+    gradientStops: presetToStops("monochrome"),
+    animationSpeed: 0.5,
+    textLayers: [
+      createDefaultTextLayer({ text: "flow.", fontFamily: "Playfair Display", fontSize: 88, fontWeight: 900, animation: "float", fontStyle: "italic" }),
     ],
   }),
 
@@ -225,6 +246,16 @@ export const GALLERY_PRESETS: BannerPreset[] = [
       createDefaultTextLayer({ text: "sweet stuff", fontFamily: "Pacifico", fontSize: 80, fontColor: "#ff4e8e", animation: "pulse" }),
     ],
   }),
+  preset("Solar Flare", "Colorful", {
+    type: "blob2",
+    colorPreset: "sunset_vibes",
+    gradientStops: presetToStops("sunset_vibes"),
+    particles: "sparkles",
+    particleCount: 40,
+    textLayers: [
+      createDefaultTextLayer({ text: "SOLAR", fontFamily: "Righteous", fontSize: 90, fontWeight: 400, animation: "scaleIn", glowEffect: true, glowColor: "#ff512f" }),
+    ],
+  }),
 
   // ───────────────────────── Animated ─────────────────────────
   preset("Fire & Ice", "Animated", {
@@ -297,6 +328,16 @@ export const GALLERY_PRESETS: BannerPreset[] = [
     gradientStops: presetToStops("fire"),
     textLayers: [
       createDefaultTextLayer({ text: "PULSE", fontFamily: "Orbitron", fontSize: 100, fontWeight: 900, animation: "pulse", letterSpacing: 12 }),
+    ],
+  }),
+  preset("Ocean Depth", "Animated", {
+    type: "waving",
+    colorPreset: "deepsea",
+    gradientStops: presetToStops("deepsea"),
+    animationSpeed: 1.2,
+    textLayers: [
+      createDefaultTextLayer({ text: "ABYSS", fontFamily: "Cinzel", fontSize: 82, fontWeight: 700, animation: "fadeIn", letterSpacing: 14 }),
+      createDefaultTextLayer({ text: "exploring the unknown", fontSize: 18, alignY: 78, opacity: 0.7, letterSpacing: 4 }),
     ],
   }),
 
@@ -377,6 +418,16 @@ export const GALLERY_PRESETS: BannerPreset[] = [
     patternOpacity: 0.18,
     textLayers: [
       createDefaultTextLayer({ text: "OBSIDIAN", fontFamily: "Cinzel", fontSize: 72, fontWeight: 700, letterSpacing: 10, gradient: true, gradientColors: ["#c7d2fe", "#818cf8"] }),
+    ],
+  }),
+  preset("Midnight Neon", "Dark", {
+    type: "neon",
+    color: "#050505",
+    gradientStops: [{ color: "#050505", position: 0 }, { color: "#111111", position: 100 }],
+    overlay: "vignette",
+    overlayOpacity: 0.6,
+    textLayers: [
+      createDefaultTextLayer({ text: "NIGHT OWL", fontFamily: "Orbitron", fontSize: 64, fontWeight: 900, animation: "neonFlicker", glowEffect: true, glowColor: "#00ffff" }),
     ],
   }),
 
@@ -467,6 +518,17 @@ export const GALLERY_PRESETS: BannerPreset[] = [
       createDefaultTextLayer({ text: "HI 999999", fontFamily: "Press Start 2P", fontSize: 14, fontColor: "#00ffff", alignY: 22, opacity: 0.9 }),
     ],
   }),
+  preset("8-Bit Adventure", "Retro", {
+    type: "rect",
+    colorPreset: "gameboy",
+    gradientStops: presetToStops("gameboy"),
+    pattern: "grid",
+    patternOpacity: 0.1,
+    textLayers: [
+      createDefaultTextLayer({ text: "LEVEL 1-1", fontFamily: "Press Start 2P", fontSize: 32, fontColor: "#0f380f", animation: "slideInLeft" }),
+      createDefaultTextLayer({ text: "Press A to Start", fontFamily: "Press Start 2P", fontSize: 14, fontColor: "#306230", alignY: 75 }),
+    ],
+  }),
 
   // ───────────────────────── Neon ─────────────────────────
   preset("Cyberpunk Grid", "Neon", {
@@ -532,6 +594,17 @@ export const GALLERY_PRESETS: BannerPreset[] = [
     particleCount: 60,
     textLayers: [
       createDefaultTextLayer({ text: "LASER", fontFamily: "Orbitron", fontSize: 96, fontWeight: 900, letterSpacing: 14, glowEffect: true, glowColor: "#00ffff", glowRadius: 18, animation: "pulse" }),
+    ],
+  }),
+  preset("Matrix Overload", "Neon", {
+    type: "matrix",
+    colorPreset: "cyber_lime",
+    gradientStops: presetToStops("cyber_lime"),
+    particles: "matrix",
+    particleCount: 80,
+    particleColor: "#00ff00",
+    textLayers: [
+      createDefaultTextLayer({ text: "SYSTEM_FAILURE", fontFamily: "JetBrains Mono", fontSize: 54, fontWeight: 800, animation: "glitch", fontColor: "#ffffff" }),
     ],
   }),
 
@@ -623,6 +696,18 @@ export const GALLERY_PRESETS: BannerPreset[] = [
       createDefaultTextLayer({ text: "scalable · observable · resilient", fontFamily: "Inter", fontSize: 18, fontColor: "#1e3a8a", alignY: 78, opacity: 0.7 }),
     ],
   }),
+  preset("Deep Learning", "Tech", {
+    type: "circle",
+    colorPreset: "deepsea",
+    gradientType: "radial",
+    gradientStops: presetToStops("deepsea"),
+    pattern: "circuit",
+    patternOpacity: 0.15,
+    textLayers: [
+      createDefaultTextLayer({ text: "Neural Network", fontFamily: "Rajdhani", fontSize: 72, fontWeight: 700, animation: "pulse" }),
+      createDefaultTextLayer({ text: "TensorFlow · PyTorch · Keras", fontFamily: "JetBrains Mono", fontSize: 18, alignY: 78, opacity: 0.8 }),
+    ],
+  }),
 
   // ───────────────────────── Holiday ─────────────────────────
   preset("Halloween", "Holiday", {
@@ -684,6 +769,94 @@ export const GALLERY_PRESETS: BannerPreset[] = [
     textLayers: [
       createDefaultTextLayer({ text: "Happy New Year", fontFamily: "Cinzel", fontSize: 64, fontWeight: 700, gradient: true, gradientColors: ["#fde047", "#facc15", "#eab308"], animation: "scaleIn" }),
       createDefaultTextLayer({ text: "✦  cheers to what's next  ✦", fontFamily: "Inter", fontSize: 20, alignY: 78, opacity: 0.85, letterSpacing: 4 }),
+    ],
+  }),
+
+  // ───────────────────────── Generic (Static) ─────────────────────────
+  preset("Modern Studio", "Generic", {
+    type: "soft",
+    colorPreset: "morning_mist",
+    overlay: "grain",
+    overlayOpacity: 0.1,
+    textLayers: [
+      createDefaultTextLayer({ text: "CREATIVE STUDIO", fontFamily: "Syncopate", fontSize: 56, fontWeight: 700, fontColor: "#1a1a1a", letterSpacing: 10, animation: "none" }),
+      createDefaultTextLayer({ text: "DESIGN · CODE · INNOVATE", fontFamily: "Inter", fontSize: 14, alignY: 72, opacity: 0.6, letterSpacing: 6, animation: "none" }),
+    ],
+  }),
+  preset("Midnight Slate", "Generic", {
+    type: "rect",
+    gradientStops: [
+      { color: "#0f172a", position: 0 },
+      { color: "#1e293b", position: 100 },
+    ],
+    pattern: "grid",
+    patternOpacity: 0.1,
+    textLayers: [
+      createDefaultTextLayer({ text: "John Doe", fontFamily: "Outfit", fontSize: 72, fontWeight: 700, fontColor: "#f8fafc", animation: "none" }),
+      createDefaultTextLayer({ text: "Fullstack Developer / UI Designer", fontFamily: "JetBrains Mono", fontSize: 18, alignY: 75, fontColor: "#94a3b8", animation: "none" }),
+    ],
+  }),
+  preset("Sunset Horizon", "Generic", {
+    type: "wave",
+    colorPreset: "sunset_vibes",
+    animationSpeed: 0,
+    textLayers: [
+      createDefaultTextLayer({ text: "Build with Passion", fontFamily: "Playfair Display", fontSize: 68, fontWeight: 700, fontColor: "#ffffff", fontStyle: "italic", animation: "none" }),
+    ],
+  }),
+  preset("Cyber Static", "Generic", {
+    type: "circle",
+    colorPreset: "cyber_lime",
+    pattern: "circuit",
+    patternOpacity: 0.2,
+    textLayers: [
+      createDefaultTextLayer({ text: "SYSTEM_CORE", fontFamily: "Share Tech Mono", fontSize: 80, fontColor: "#3f6212", animation: "none" }),
+      createDefaultTextLayer({ text: "RELIABILITY THROUGH DESIGN", fontFamily: "Inter", fontSize: 16, alignY: 80, fontColor: "#3f6212", fontWeight: 600, animation: "none" }),
+    ],
+  }),
+  preset("Clean Alpine", "Generic", {
+    type: "mountain",
+    gradientStops: [
+      { color: "#f1f5f9", position: 0 },
+      { color: "#cbd5e1", position: 100 },
+    ],
+    particles: "snowflakes",
+    particleCount: 20,
+    particleColor: "#ffffff",
+    textLayers: [
+      createDefaultTextLayer({ text: "MINIMALISM", fontFamily: "Syncopate", fontSize: 60, fontWeight: 700, fontColor: "#334155", letterSpacing: 12, animation: "none" }),
+    ],
+  }),
+  preset("Ocean Stillness", "Generic", {
+    type: "blob",
+    colorPreset: "deepsea",
+    overlay: "vignette",
+    overlayOpacity: 0.4,
+    textLayers: [
+      createDefaultTextLayer({ text: "Deep Focus", fontFamily: "Outfit", fontSize: 72, fontWeight: 800, fontColor: "#ffffff", animation: "none" }),
+      createDefaultTextLayer({ text: "The art of solving complex problems", fontFamily: "Inter", fontSize: 18, alignY: 76, opacity: 0.8, animation: "none" }),
+    ],
+  }),
+  preset("Retro Static", "Generic", {
+    type: "wave",
+    colorPreset: "gameboy",
+    animationSpeed: 0,
+    textLayers: [
+      createDefaultTextLayer({ text: "GAME OVER", fontFamily: "Press Start 2P", fontSize: 48, fontColor: "#0f380f", animation: "none" }),
+      createDefaultTextLayer({ text: "THANK YOU FOR PLAYING", fontFamily: "Press Start 2P", fontSize: 12, alignY: 75, fontColor: "#306230", animation: "none" }),
+    ],
+  }),
+  preset("Golden Era", "Generic", {
+    type: "rect",
+    gradientStops: [
+      { color: "#1c1917", position: 0 },
+      { color: "#44403c", position: 100 },
+    ],
+    overlay: "lightLeak",
+    overlayOpacity: 0.2,
+    textLayers: [
+      createDefaultTextLayer({ text: "EXCELLENCE", fontFamily: "Cinzel", fontSize: 72, fontWeight: 700, gradient: true, gradientColors: ["#d97706", "#f59e0b", "#fbbf24"], animation: "none" }),
+      createDefaultTextLayer({ text: "SINCE 2024", fontFamily: "Inter", fontSize: 14, alignY: 78, fontColor: "#fbbf24", letterSpacing: 8, fontWeight: 600, animation: "none" }),
     ],
   }),
 ];

@@ -1,6 +1,6 @@
 export function getApiBase(): string {
-  // Use the Vercel live server URL for banner generation
-  return "https://github-animatedbanner.vercel.app/api";
+  if (typeof window === "undefined") return "";
+  return `${window.location.origin}/api`;
 }
 
 export function getBannerUrl(query: string): string {

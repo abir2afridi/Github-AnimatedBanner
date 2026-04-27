@@ -21,6 +21,11 @@ export const COLOR_PRESETS: Record<Exclude<ColorPreset, "custom">, string[]> = {
   ice: ["#83a4d4", "#b6fbff"],
   berry: ["#8e2de2", "#4a00e0"],
   coral: ["#ff9966", "#ff5e62"],
+  deepsea: ["#001122", "#004466", "#0088aa"],
+  sunset_vibes: ["#ff512f", "#f09819"],
+  cyber_lime: ["#00ff00", "#003300"],
+  gameboy: ["#9bbc0f", "#8bac0f", "#306230", "#0f380f"],
+  morning_mist: ["#e0eafc", "#cfdef3"],
 };
 
 export function presetToStops(preset: ColorPreset): GradientStop[] {

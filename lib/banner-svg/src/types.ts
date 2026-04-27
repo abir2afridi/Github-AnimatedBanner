@@ -73,6 +73,11 @@ export type ColorPreset =
   | "ice"
   | "berry"
   | "coral"
+  | "deepsea"
+  | "sunset_vibes"
+  | "cyber_lime"
+  | "gameboy"
+  | "morning_mist"
   | "custom";
 
 export type GradientType = "linear" | "radial" | "conic";

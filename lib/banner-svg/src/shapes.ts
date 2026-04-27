@@ -13,58 +13,47 @@ const rectFill = (w: number, h: number, fill: string) =>
   `<rect width="${w}" height="${h}" fill="${fill}"/>`;
 
 const waving: ShapeFn = (w, h, fill, speed) => {
-  const dur = (12 / (speed || 1)).toFixed(1);
-  const dur2 = (8 / (speed || 1)).toFixed(1);
-  const dur3 = (15 / (speed || 1)).toFixed(1);
+  const dur = (20 / (speed || 1)).toFixed(1);
+  const dur2 = (15 / (speed || 1)).toFixed(1);
+  const dur3 = (25 / (speed || 1)).toFixed(1);
 
-  // Generate a smooth wave path using a series of points
-  const getWavePath = (yOffset: number, amplitude: number, phase: number, segments: number = 8) => {
-    let path = `M0 0 L0 ${yOffset}`;
-    for (let i = 0; i <= segments; i++) {
-      const x = (w / segments) * i;
-      // Use sine for a smoother, more natural wave
-      const y = yOffset + Math.sin((i / segments) * Math.PI * 2 + phase) * amplitude;
-      path += ` L${x} ${y}`;
-    }
-    path += ` L${w} 0 Z`;
-    return path;
-  };
+  // Layer 1 paths
+  const v1 = `M0 0L 0 ${h * 0.6}Q ${w * 0.25} ${h * 0.8} ${w * 0.5} ${h * 0.65}T ${w} ${h * 0.75}L ${w} 0 Z`;
+  const v2 = `M0 0L 0 ${h * 0.7}Q ${w * 0.25} ${h * 0.8} ${w * 0.5} ${h * 0.7}T ${w} ${h * 0.65}L ${w} 0 Z`;
+  const v3 = `M0 0L 0 ${h * 0.8}Q ${w * 0.25} ${h * 0.65} ${w * 0.5} ${h * 0.8}T ${w} ${h * 0.65}L ${w} 0 Z`;
 
-  // Base paths for morphing (3 states for smoother flow)
-  const l1_a = getWavePath(h * 0.7, h * 0.08, 0);
-  const l1_b = getWavePath(h * 0.7, h * 0.08, Math.PI * 0.66);
-  const l1_c = getWavePath(h * 0.7, h * 0.08, Math.PI * 1.33);
-  
-  const l2_a = getWavePath(h * 0.75, h * 0.06, Math.PI * 0.5);
-  const l2_b = getWavePath(h * 0.75, h * 0.06, Math.PI * 1.16);
-  const l2_c = getWavePath(h * 0.75, h * 0.06, Math.PI * 1.83);
-  
-  const l3_a = getWavePath(h * 0.65, h * 0.1, Math.PI * 1.2);
-  const l3_b = getWavePath(h * 0.65, h * 0.1, Math.PI * 1.86);
-  const l3_c = getWavePath(h * 0.65, h * 0.1, Math.PI * 0.53);
+  // Layer 2 paths (offset and different curve)
+  const o1 = `M0 0L 0 ${h * 0.65}Q ${w * 0.25} ${h * 0.9} ${w * 0.5} ${h * 0.75}T ${w} ${h * 0.8}L ${w} 0 Z`;
+  const o2 = `M0 0L 0 ${h * 0.75}Q ${w * 0.25} ${h * 0.6} ${w * 0.5} ${h * 0.6}T ${w} ${h * 0.7}L ${w} 0 Z`;
+  const o3 = `M0 0L 0 ${h * 0.7}Q ${w * 0.25} ${h * 0.6} ${w * 0.5} ${h * 0.75}T ${w} ${h * 0.85}L ${w} 0 Z`;
+
+  // Layer 3 paths (deep wave)
+  const d1 = `M0 0L 0 ${h * 0.5}Q ${w * 0.25} ${h * 0.7} ${w * 0.5} ${h * 0.55}T ${w} ${h * 0.6}L ${w} 0 Z`;
+  const d2 = `M0 0L 0 ${h * 0.6}Q ${w * 0.25} ${h * 0.4} ${w * 0.5} ${h * 0.6}T ${w} ${h * 0.5}L ${w} 0 Z`;
+  const d3 = `M0 0L 0 ${h * 0.55}Q ${w * 0.25} ${h * 0.6} ${w * 0.5} ${h * 0.45}T ${w} ${h * 0.55}L ${w} 0 Z`;
 
   return {
     defs: "",
     background: `
-      <!-- Solid base -->
+      <!-- Solid base to ensure no gaps -->
       <rect width="${w}" height="${h * 0.5}" fill="${fill}" />
       
-      <!-- Back Wave -->
-      <path d="${l3_a}" fill="${fill}" opacity="0.3">
+      <!-- Deep Wave -->
+      <path d="${d1}" fill="${fill}" opacity="0.3" stroke="rgba(255,255,255,0.05)" stroke-width="1">
         <animate attributeName="d" dur="${dur3}s" repeatCount="indefinite"
-          values="${l3_a};${l3_b};${l3_c};${l3_a}" />
+          keyTimes="0;0.33;0.66;1" values="${d1};${d2};${d3};${d1}" />
       </path>
 
       <!-- Mid Wave -->
-      <path d="${l2_a}" fill="${fill}" opacity="0.5">
+      <path d="${o1}" fill="${fill}" opacity="0.5" stroke="rgba(255,255,255,0.1)" stroke-width="1">
         <animate attributeName="d" dur="${dur2}s" repeatCount="indefinite"
-          values="${l2_a};${l2_b};${l2_c};${l2_a}" />
+          keyTimes="0;0.33;0.66;1" values="${o1};${o2};${o3};${o1}" />
       </path>
 
       <!-- Front Wave -->
-      <path d="${l1_a}" fill="${fill}" opacity="0.8" stroke="white" stroke-opacity="0.2" stroke-width="2">
+      <path d="${v1}" fill="${fill}" opacity="0.8" stroke="rgba(255,255,255,0.15)" stroke-width="1">
         <animate attributeName="d" dur="${dur}s" repeatCount="indefinite"
-          values="${l1_a};${l1_b};${l1_c};${l1_a}" />
+          keyTimes="0;0.33;0.66;1" values="${v1};${v2};${v3};${v1}" />
       </path>
     `,
     viewBox: `0 0 ${w} ${h}`,

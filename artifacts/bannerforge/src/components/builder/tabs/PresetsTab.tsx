@@ -14,6 +14,7 @@ const CATEGORIES = [
   "Retro",
   "Neon",
   "Holiday",
+  "Generic",
 ] as const;
 
 export function PresetsTab() {

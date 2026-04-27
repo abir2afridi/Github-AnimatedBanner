@@ -9,7 +9,6 @@ A GitHub README banner generator that produces animated SVG banners via a URL AP
 - **⚡ Live Preview**: The builder UI provides a byte-identical preview of the API output.
 - **📱 Responsive Design**: Optimized for all screen sizes.
 - **🔗 Seamless Integration**: Simply copy the URL or Markdown and paste it into your GitHub README.
-- **⏱️ Variable Speed**: Control the frequency of waving and other animations via a dedicated speed parameter.
 
 ## Architecture
 
@@ -186,7 +185,8 @@ This will typecheck and build all workspace packages.
 
 The project is deployed on Vercel:
 
-- **Production:** https://github-animatedbanner.vercel.app/
+- **Production:** https://github-animated-banner-e7bg60pzv-abir2afridi-5746s-projects.vercel.app
+- **Alias:** https://github-animated-banner-seven.vercel.app
 
 To deploy to Vercel:
 
@@ -206,6 +206,20 @@ The project uses a `vercel.json` configuration file that:
 
 ```
 GET /api/banner?type=waving&preset=ocean&text=Hello&desc=Welcome
+```
+
+Vercel (live) example:
+
+```
+https://github-animatedbanner.vercel.app/api/banner?type=waving&preset=ocean&text=Hello&desc=Welcome
+```
+
+### GitHub README Embed
+
+Use the API URL directly as an image source:
+
+```md
+![Banner](https://github-animatedbanner.vercel.app/api/banner?type=waving&preset=ocean&text=Hello&desc=Welcome)
 ```
 
 Common params:

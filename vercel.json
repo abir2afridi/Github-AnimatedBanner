@@ -1,15 +1,18 @@
 {
-  "buildCommand": "npx pnpm build",
+  "buildCommand": "cd artifacts/bannerforge && npx pnpm build",
   "installCommand": "npx pnpm install",
   "outputDirectory": "artifacts/bannerforge/dist/public",
-  "framework": "vite",
+  "framework": null,
+  "env": {
+    "BASE_PATH": "/"
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index"
+      "destination": "/api/$1"
     },
     {
-      "source": "/((?!api/).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
