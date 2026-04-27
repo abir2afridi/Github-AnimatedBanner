@@ -5,16 +5,11 @@
   "framework": null,
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
   "env": {
-    "PORT": "5173",
     "BASE_PATH": "/"
   }
 }

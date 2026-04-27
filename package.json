@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "dev": "npm run dev:bannerforge",
+    "dev:all": "concurrently -k -n bannerforge,api -c blue,green \"npm run dev:bannerforge\" \"npm run dev:api\"",
+    "dev:bannerforge": "npx pnpm --filter @workspace/bannerforge dev",
+    "dev:api": "npx pnpm --filter @workspace/api-server dev",
+    "dev:sandbox": "npx pnpm --filter @workspace/mockup-sandbox dev",
     "build": "npm run typecheck && npm run build:workspaces",
     "build:workspaces": "npm run build --workspaces --if-present",
     "typecheck:libs": "tsc --build",
@@ -10,6 +15,7 @@
   },
   "private": true,
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "typescript": "~5.9.2",
     "prettier": "^3.8.1"
   }
