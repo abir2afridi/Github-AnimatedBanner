@@ -18,5 +18,11 @@
     "concurrently": "^9.2.1",
     "typescript": "~5.9.2",
     "prettier": "^3.8.1"
+  },
+  "dependencies": {
+    "express": "^5.0.0",
+    "cors": "^2.8.5",
+    "pino": "^9.0.0",
+    "pino-http": "^10.0.0"
   }
 }
