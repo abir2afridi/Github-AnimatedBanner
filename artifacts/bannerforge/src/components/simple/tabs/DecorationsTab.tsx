@@ -58,11 +58,10 @@ export function DecorationsTab() {
         <div className="grid grid-cols-4 gap-2">
           <button
             onClick={() => update({ decoration: null })}
-            className={`aspect-square flex items-center justify-center rounded-xl border transition-all ${
-              config.decoration === null
-                ? "bg-primary/20 border-primary shadow-lg shadow-primary/10"
-                : "bg-secondary/30 border-border hover:bg-secondary/50"
-            }`}
+            className={`aspect-square flex items-center justify-center rounded-xl border transition-all ${config.decoration === null
+              ? "bg-primary/20 border-primary shadow-lg shadow-primary/10"
+              : "bg-secondary/30 border-border hover:bg-secondary/50"
+              }`}
           >
             <Ban size={18} className="text-muted-foreground" />
           </button>
@@ -70,11 +69,10 @@ export function DecorationsTab() {
             <button
               key={key}
               onClick={() => update({ decoration: key })}
-              className={`aspect-square flex items-center justify-center rounded-xl border transition-all bg-secondary/30 ${
-                config.decoration === key
-                  ? "border-primary ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg shadow-primary/10"
-                  : "border-border hover:bg-secondary/50"
-              }`}
+              className={`aspect-square flex items-center justify-center rounded-xl border transition-all bg-secondary/30 ${config.decoration === key
+                ? "border-primary ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg shadow-primary/10"
+                : "border-border hover:bg-secondary/50"
+                }`}
               title={key}
             >
               <img
@@ -87,11 +85,10 @@ export function DecorationsTab() {
           {customSrc && (
             <button
               onClick={() => update({ decoration: customSrc })}
-              className={`aspect-square flex items-center justify-center rounded-xl border transition-all bg-secondary/30 ${
-                isCustom
-                  ? "border-primary ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg shadow-primary/10"
-                  : "border-border hover:bg-secondary/50"
-              }`}
+              className={`aspect-square flex items-center justify-center rounded-xl border transition-all bg-secondary/30 ${isCustom
+                ? "border-primary ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg shadow-primary/10"
+                : "border-border hover:bg-secondary/50"
+                }`}
             >
               <img src={customSrc} alt="Custom" className="h-8 w-8 object-contain" />
             </button>

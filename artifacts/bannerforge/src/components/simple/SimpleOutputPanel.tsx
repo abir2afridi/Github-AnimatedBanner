@@ -49,7 +49,7 @@ export function SimpleOutputPanel() {
   };
 
   const getMarkdown = () => {
-    return `![BannerForge](https://github-animatedbanner.vercel.app/YOUR_BANNER.png)`;
+    return `![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?preset=ocean&text=BannerForge&desc=GitHub+README+banner+generator)`;
   };
 
   const handleCopyMarkdown = async () => {
@@ -135,9 +135,7 @@ export function SimpleOutputPanel() {
             <div className="flex gap-2 items-start text-[9px] text-muted-foreground bg-background/50 p-2 rounded-lg">
               <Info className="w-3 h-3 mt-0.5 shrink-0" />
               <p>
-                1. Download the PNG<br/>
-                2. Upload to your repo<br/>
-                3. Update the URL in this snippet
+                Copy this snippet and paste it directly into your GitHub README. The banner renders from the live Vercel API.
               </p>
             </div>
           </div>
