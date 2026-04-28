@@ -19,6 +19,7 @@ export function SimpleOutputPanel() {
   const config = useSimple((s) => s.config);
   const [exporting, setExporting] = useState(false);
   const [copying, setCopying] = useState(false);
+  const [snippetType, setSnippetType] = useState<"markdown" | "html">("markdown");
 
   const handleDownloadPNG = async () => {
     setExporting(true);
@@ -48,7 +49,7 @@ export function SimpleOutputPanel() {
     }
   };
 
-  const getMarkdown = () => {
+  const getEmbedUrl = () => {
     const q = new URLSearchParams({
       width: String(config.width),
       height: String(config.height),
@@ -63,11 +64,23 @@ export function SimpleOutputPanel() {
       v: String(Date.now()),
     }).toString();
 
-    return `![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?${q})`;
+    return `https://github-animatedbanner.vercel.app/api/banner.svg?${q}`;
+  };
+
+  const getMarkdown = () => {
+    return `![Banner](${getEmbedUrl()})`;
+  };
+
+  const getHtml = () => {
+    return `<img src="${getEmbedUrl()}" alt="Banner" />`;
+  };
+
+  const getSnippet = () => {
+    return snippetType === "markdown" ? getMarkdown() : getHtml();
   };
 
   const handleCopyMarkdown = async () => {
-    const ok = await copyText(getMarkdown());
+    const ok = await copyText(getSnippet());
     if (ok) toast.success("Snippet copied!");
     else toast.error("Failed to copy");
   };
@@ -130,12 +143,33 @@ export function SimpleOutputPanel() {
             
             <div className="flex items-center gap-2 text-xs font-bold text-foreground">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-              Markdown Snippet
+              Embed Snippet
+            </div>
+
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant={snippetType === "markdown" ? "default" : "outline"}
+                className="h-7 text-[10px] rounded-lg"
+                onClick={() => setSnippetType("markdown")}
+              >
+                Markdown
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                variant={snippetType === "html" ? "default" : "outline"}
+                className="h-7 text-[10px] rounded-lg"
+                onClick={() => setSnippetType("html")}
+              >
+                HTML
+              </Button>
             </div>
             
             <div className="relative">
               <pre className="p-4 bg-black/40 rounded-xl text-[10px] font-mono text-primary/90 border border-primary/10 overflow-x-auto">
-                {getMarkdown()}
+                {getSnippet()}
               </pre>
               <button 
                 onClick={handleCopyMarkdown}
@@ -149,7 +183,7 @@ export function SimpleOutputPanel() {
             <div className="flex gap-2 items-start text-[9px] text-muted-foreground bg-background/50 p-2 rounded-lg">
               <Info className="w-3 h-3 mt-0.5 shrink-0" />
               <p>
-                Copy this snippet and paste it directly into your GitHub README. The banner renders from the live Vercel API.
+                Use Markdown directly in README, or choose HTML if you are using an <span className="font-mono">&lt;img /&gt;</span> tag.
               </p>
             </div>
           </div>
