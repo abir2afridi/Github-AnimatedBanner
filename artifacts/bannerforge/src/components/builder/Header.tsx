@@ -13,9 +13,12 @@ import {
   Moon,
   Sun,
   Monitor,
+  Layout,
+  Layers
 } from "lucide-react";
 import { useTheme } from "../theme-provider";
 import { useBuilder } from "../../store/builder";
+import { useSimple } from "../../store/simple";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -44,10 +47,28 @@ export function Header() {
   const setParams = useBuilder((s) => s.set);
   const canUndo = useBuilder((s) => s.historyIndex > 0);
   const canRedo = useBuilder((s) => s.historyIndex < s.history.length - 1);
+  const mode = useBuilder((s) => s.mode);
+  const setMode = useBuilder((s) => s.setMode);
+
+  // Simple Mode Store
+  const simpleRandomize = useSimple((s) => s.randomize);
+  const simpleReset = useSimple((s) => s.reset);
+
   const { setTheme } = useTheme();
   const [shared, setShared] = useState(false);
 
   const onShare = async () => {
+    if (mode === "simple") {
+      // In simple mode, sharing is handled by the hash already, but we can copy the link
+      const url = window.location.href;
+      if (await copyText(url)) {
+        setShared(true);
+        toast.success("Share link copied to clipboard!");
+        setTimeout(() => setShared(false), 1800);
+      }
+      return;
+    }
+
     const q = paramsToQuery(params).toString();
     const url = `${window.location.origin}${window.location.pathname.replace(/\/$/, "")}/?${q}`;
     if (await copyText(url)) {
@@ -57,6 +78,24 @@ export function Header() {
     } else {
       toast.error("Copy failed");
     }
+  };
+
+  const handleRandomize = () => {
+    if (mode === "simple") {
+      simpleRandomize();
+    } else {
+      randomize();
+    }
+    toast.success("Randomized!");
+  };
+
+  const handleReset = () => {
+    if (mode === "simple") {
+      simpleReset();
+    } else {
+      reset();
+    }
+    toast.success("Reset to defaults");
   };
 
   const currentSize = SIZE_PRESETS.find(
@@ -77,72 +116,102 @@ export function Header() {
             GitHub README banner generator
           </div>
         </div>
+
+        {/* Mode Switcher */}
+        <div className="ml-4 flex p-0.5 bg-secondary/50 rounded-lg border border-border">
+          <button
+            onClick={() => setMode("simple")}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              mode === "simple"
+                ? "bg-background text-primary shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Layout className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Simple</span>
+          </button>
+          <button
+            onClick={() => setMode("svg")}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              mode === "svg"
+                ? "bg-background text-primary shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Advanced</span>
+          </button>
+        </div>
       </div>
 
       <div className="flex items-center gap-1">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-8 px-2.5 gap-1.5 hidden md:inline-flex"
-              title="Banner size"
-            >
-              <Maximize className="w-3.5 h-3.5" />
-              <span className="text-xs">{currentSize?.label ?? "Custom"}</span>
-              <span className="text-[10px] text-muted-foreground font-mono">
-                {params.width}×{params.height}
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Banner size</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {SIZE_PRESETS.map((s) => (
-              <DropdownMenuItem
-                key={s.id}
-                onClick={() =>
-                  setParams((p) => ({ ...p, width: s.width, height: s.height }))
-                }
-                className="flex items-center justify-between"
+        {mode === "svg" && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-8 px-2.5 gap-1.5 hidden md:inline-flex"
+                title="Banner size"
               >
-                <span>{s.label}</span>
-                <span className="text-[10px] text-muted-foreground font-mono">{s.hint}</span>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <Maximize className="w-3.5 h-3.5" />
+                <span className="text-xs">{currentSize?.label ?? "Custom"}</span>
+                <span className="text-[10px] text-muted-foreground font-mono">
+                  {params.width}×{params.height}
+                </span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Banner size</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {SIZE_PRESETS.map((s) => (
+                <DropdownMenuItem
+                  key={s.id}
+                  onClick={() =>
+                    setParams((p) => ({ ...p, width: s.width, height: s.height }))
+                  }
+                  className="flex items-center justify-between"
+                >
+                  <span>{s.label}</span>
+                  <span className="text-[10px] text-muted-foreground font-mono">{s.hint}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
 
         <div className="w-px h-6 bg-border mx-1 hidden md:block" />
 
+        {mode === "svg" && (
+          <>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-8 px-2"
+              disabled={!canUndo}
+              onClick={undo}
+              title="Undo (Ctrl+Z)"
+            >
+              <Undo2 className="w-4 h-4" />
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-8 px-2"
+              disabled={!canRedo}
+              onClick={redo}
+              title="Redo (Ctrl+Y)"
+            >
+              <Redo2 className="w-4 h-4" />
+            </Button>
+          </>
+        )}
+        
         <Button
           size="sm"
           variant="ghost"
           className="h-8 px-2"
-          disabled={!canUndo}
-          onClick={undo}
-          title="Undo (Ctrl+Z)"
-        >
-          <Undo2 className="w-4 h-4" />
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="h-8 px-2"
-          disabled={!canRedo}
-          onClick={redo}
-          title="Redo (Ctrl+Y)"
-        >
-          <Redo2 className="w-4 h-4" />
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="h-8 px-2"
-          onClick={() => {
-            reset();
-            toast.success("Reset to defaults");
-          }}
+          onClick={handleReset}
           title="Reset"
         >
           <RotateCcw className="w-4 h-4" />
@@ -151,10 +220,7 @@ export function Header() {
           size="sm"
           variant="ghost"
           className="h-8 px-2.5 gap-1.5 text-accent"
-          onClick={() => {
-            randomize();
-            toast.success("Randomized — press R to roll again");
-          }}
+          onClick={handleRandomize}
           title="Surprise me (R)"
         >
           <Shuffle className="w-3.5 h-3.5" />

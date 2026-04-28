@@ -19,6 +19,7 @@ import {
 } from "@workspace/banner-svg";
 
 interface BuilderState {
+  mode: "svg" | "simple";
   params: BannerParams;
   activeTab: string;
   activeTextLayerId: string | null;
@@ -28,6 +29,7 @@ interface BuilderState {
   applyPreset: (preset: ColorPreset) => void;
   loadParams: (p: BannerParams) => void;
   setActiveTab: (t: string) => void;
+  setMode: (m: "svg" | "simple") => void;
   setActiveTextLayer: (id: string | null) => void;
   addTextLayer: () => void;
   removeTextLayer: (id: string) => void;
@@ -100,6 +102,7 @@ function randomParams(seed: BannerParams): BannerParams {
 }
 
 export const useBuilder = create<BuilderState>((set, get) => ({
+  mode: "svg" as const,
   params: DEFAULT_PARAMS,
   activeTab: "shapes",
   activeTextLayerId: DEFAULT_PARAMS.textLayers[0]?.id ?? null,
@@ -126,6 +129,7 @@ export const useBuilder = create<BuilderState>((set, get) => ({
     activeTextLayerId: p.textLayers[0]?.id ?? null,
   })),
   setActiveTab: (t) => set({ activeTab: t }),
+  setMode: (m) => set({ mode: m }),
   setActiveTextLayer: (id) => set({ activeTextLayerId: id }),
   addTextLayer: () =>
     set((state) => {
