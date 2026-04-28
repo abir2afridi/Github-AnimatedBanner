@@ -49,7 +49,20 @@ export function SimpleOutputPanel() {
   };
 
   const getMarkdown = () => {
-    return `![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?preset=ocean&text=BannerForge&desc=GitHub+README+banner+generator&v=1)`;
+    const q = new URLSearchParams({
+      width: String(config.width),
+      height: String(config.height),
+      color: `${config.bgColor.replace("#", "")}@0,${config.bgColor.replace("#", "")}@100`,
+      text: config.title,
+      fontSize: String(config.titleSize),
+      fontColor: config.titleColor,
+      desc: config.subtitle,
+      descFontSize: String(config.subtitleSize),
+      descColor: config.subtitleColor,
+      v: String(Date.now()),
+    }).toString();
+
+    return `![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?${q})`;
   };
 
   const handleCopyMarkdown = async () => {

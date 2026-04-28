@@ -244,7 +244,7 @@ https://github-animatedbanner.vercel.app/api/banner?type=waving&preset=ocean&tex
 Use the API URL directly as an image source:
 
 ```md
-![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?type=waving&preset=ocean&text=Hello&desc=Welcome)
+![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?type=waving&preset=ocean&text=Hello&desc=Welcome&v=1)
 ```
 
 Common params:
