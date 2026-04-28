@@ -189,14 +189,14 @@ export function SimpleOutputPanel() {
           </div>
         </div>
 
-        {/* Dynamic Mode Promo */}
-        <div className="p-4 rounded-2xl border border-amber-500/10 bg-amber-500/5 space-y-2">
-          <div className="flex items-center gap-2 text-amber-500 text-xs font-bold uppercase tracking-wider">
-            <ExternalLink className="w-3.5 h-3.5" />
-            Want Dynamic Content?
+        {/* GitHub Usage Notice */}
+        <div className="p-4 rounded-2xl border border-blue-500/10 bg-blue-500/5 space-y-2">
+          <div className="flex items-center gap-2 text-blue-500 text-xs font-bold uppercase tracking-wider">
+            <Info className="w-3.5 h-3.5" />
+            GitHub README Usage
           </div>
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            Simple Mode creates static images. For <span className="text-amber-500/80 font-bold">live visitor counters</span> and automated updates, switch to Advanced Mode.
+            For GitHub READMEs, <span className="text-blue-500/80 font-bold">download the PNG</span> and upload it to your repo, then use a local path. External API endpoints may be blocked by GitHub's image proxy.
           </p>
         </div>
       </div>
