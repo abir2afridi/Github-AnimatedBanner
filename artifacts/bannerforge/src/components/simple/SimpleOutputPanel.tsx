@@ -49,7 +49,7 @@ export function SimpleOutputPanel() {
   };
 
   const getMarkdown = () => {
-    return `![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?preset=ocean&text=BannerForge&desc=GitHub+README+banner+generator)`;
+    return `![Banner](https://github-animatedbanner.vercel.app/api/banner.svg?preset=ocean&text=BannerForge&desc=GitHub+README+banner+generator&v=1)`;
   };
 
   const handleCopyMarkdown = async () => {

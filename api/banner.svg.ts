@@ -21,8 +21,7 @@ export default function handler(req: Request): Response {
       status: 200,
       headers: {
         "Content-Type": "image/svg+xml; charset=utf-8",
-        "Cache-Control":
-          "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400",
+        "Cache-Control": "no-store, max-age=0",
         "Access-Control-Allow-Origin": "*",
       },
     });
