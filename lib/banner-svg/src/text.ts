@@ -51,7 +51,7 @@ export function renderTextLayer(layer: TextLayer, w: number, h: number): Rendere
     ? `paint-order="stroke" stroke="${layer.textStrokeColor}" stroke-width="${layer.textStrokeWidth}" stroke-linejoin="round"`
     : "";
 
-  const transform = `rotate(${layer.rotate} ${x.toFixed(1)} ${y.toFixed(1)})`;
+  const transform = `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${layer.rotate}) skewX(${layer.skewX ?? 0}) skewY(${layer.skewY ?? 0}) translate(${-x.toFixed(1)} ${-y.toFixed(1)})`;
   const lines = layer.text.split("\n");
   const lineHeight = layer.fontSize * 1.15;
   const startY = y - ((lines.length - 1) * lineHeight) / 2;

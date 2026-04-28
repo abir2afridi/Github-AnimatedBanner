@@ -14,6 +14,10 @@ const PARTICLES: { id: ParticleType; label: string; emoji: string }[] = [
   { id: "matrix", label: "Matrix", emoji: "01" },
   { id: "hearts", label: "Hearts", emoji: "♥" },
   { id: "fireflies", label: "Fireflies", emoji: "✶" },
+  { id: "rain", label: "Rain", emoji: "🌧" },
+  { id: "rockets", label: "Rockets", emoji: "🚀" },
+  { id: "blocks", label: "Blocks", emoji: "■" },
+  { id: "programming", label: "Dev Icons", emoji: "</>" },
 ];
 
 export function ParticlesTab() {

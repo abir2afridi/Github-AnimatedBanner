@@ -219,6 +219,24 @@ export function TextTab() {
             unit="°"
             onChange={(v) => updateLayer(layer.id, { rotate: v })}
           />
+          <div className="grid grid-cols-2 gap-2">
+            <LabelSlider
+              label="Skew X"
+              value={layer.skewX ?? 0}
+              min={-60}
+              max={60}
+              unit="°"
+              onChange={(v) => updateLayer(layer.id, { skewX: v })}
+            />
+            <LabelSlider
+              label="Skew Y"
+              value={layer.skewY ?? 0}
+              min={-60}
+              max={60}
+              unit="°"
+              onChange={(v) => updateLayer(layer.id, { skewY: v })}
+            />
+          </div>
           <LabelSlider
             label="Opacity"
             value={layer.opacity}

@@ -91,6 +91,36 @@ export function buildParticles(
           `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(s * 0.6).toFixed(1)}" fill="${color}" opacity="${op.toFixed(2)}"><animate attributeName="opacity" values="0;${op.toFixed(2)};0" dur="${dur.toFixed(2)}s" begin="${delay.toFixed(2)}s" repeatCount="indefinite"/></circle>`,
         );
         break;
+      case "rain":
+        items.push(
+          `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y + s * 3).toFixed(1)}" stroke="${color}" stroke-width="1" opacity="${(op * 0.5).toFixed(2)}"><animate attributeName="y1" values="${y.toFixed(1)};${(y + h).toFixed(1)}" dur="${(dur * 0.5).toFixed(2)}s" begin="${delay.toFixed(2)}s" repeatCount="indefinite"/><animate attributeName="y2" values="${(y + s * 3).toFixed(1)};${(y + h + s * 3).toFixed(1)}" dur="${(dur * 0.5).toFixed(2)}s" begin="${delay.toFixed(2)}s" repeatCount="indefinite"/></line>`,
+        );
+        break;
+      case "rockets": {
+        const path = "M-2,0 L0,-4 L2,0 L1,4 L-1,4 Z";
+        items.push(
+          `<path d="${path}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s.toFixed(2)})" fill="${color}" opacity="${op.toFixed(2)}"><animateTransform attributeName="transform" type="translate" values="${x.toFixed(1)} ${(y + h).toFixed(1)};${x.toFixed(1)} ${(-s * 5).toFixed(1)}" dur="${(dur * 0.8).toFixed(2)}s" begin="${delay.toFixed(2)}s" repeatCount="indefinite"/></path>`,
+        );
+        break;
+      }
+      case "blocks":
+        items.push(
+          `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${s.toFixed(1)}" height="${s.toFixed(1)}" rx="1" fill="${color}" opacity="${op.toFixed(2)}"><animateTransform attributeName="transform" type="rotate" values="0 ${x.toFixed(1)} ${y.toFixed(1)};360 ${x.toFixed(1)} ${y.toFixed(1)}" dur="${dur.toFixed(2)}s" begin="${delay.toFixed(2)}s" repeatCount="indefinite"/></rect>`,
+        );
+        break;
+      case "programming": {
+        const icons = [
+          "M-2,-2 L2,0 L-2,2", // > (bracket)
+          "M-2,2 L2,-2", // / (slash)
+          "M-2,0 A2,2 0 1,1 2,0 A2,2 0 1,1 -2,0", // circle
+          "M-2,-2 H2 V2 H-2 Z", // square
+        ];
+        const p = icons[i % icons.length];
+        items.push(
+          `<path d="${p}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s.toFixed(2)})" fill="none" stroke="${color}" stroke-width="1" opacity="${op.toFixed(2)}"><animate attributeName="opacity" values="0;${op.toFixed(2)};0" dur="${dur.toFixed(2)}s" begin="${delay.toFixed(2)}s" repeatCount="indefinite"/></path>`,
+        );
+        break;
+      }
     }
   }
 

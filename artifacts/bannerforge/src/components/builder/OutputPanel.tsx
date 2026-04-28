@@ -3,8 +3,8 @@ import { Check, Copy, Download } from "lucide-react";
 import { generateBannerSVG, paramsToQuery } from "@workspace/banner-svg";
 import { useBuilder } from "../../store/builder";
 import { copyText, downloadFile, getBannerUrl } from "../../lib/url";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Button } from "../ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
 import { toast } from "sonner";
 
 function CodeBlock({ code, language }: { code: string; language: string }) {
@@ -18,22 +18,32 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
       toast.error("Copy failed");
     }
   };
+
   return (
-    <div className="relative group">
-      <pre className="bg-[#0d1117] border border-border rounded-md p-3 text-xs overflow-x-auto text-zinc-200 font-mono leading-relaxed max-h-48 scrollbar-thin">
-        <code>{code}</code>
-      </pre>
-      <Button
-        size="sm"
-        variant="secondary"
-        className="absolute top-2 right-2 h-7"
-        onClick={onCopy}
-      >
-        {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-        <span className="ml-1.5">{copied ? "Copied" : "Copy"}</span>
-      </Button>
-      <div className="text-[10px] text-muted-foreground mt-1 px-1">
-        {language} · {code.length} chars
+    <div className="relative group border border-border rounded-lg bg-[#0d1117] overflow-hidden hover:border-primary/30 transition-colors">
+      <div className="flex items-center justify-between px-3 py-1.5 bg-zinc-900/80 border-b border-border/50">
+        <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest leading-none">
+          {language}
+        </span>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-6 px-2 text-[10px] text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors gap-1.5"
+          onClick={onCopy}
+        >
+          {copied ? (
+            <Check className="w-3 h-3 text-emerald-500" />
+          ) : (
+            <Copy className="w-3 h-3" />
+          )}
+          {copied ? "Copied" : "Copy"}
+        </Button>
+      </div>
+      <div className="relative">
+        <pre className="p-3.5 text-[11px] overflow-x-auto text-zinc-300 font-mono leading-relaxed max-h-48 scrollbar-thin selection:bg-primary/30">
+          <code>{code}</code>
+        </pre>
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#0d1117] to-transparent pointer-events-none opacity-50" />
       </div>
     </div>
   );

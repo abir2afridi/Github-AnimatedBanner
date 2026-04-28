@@ -319,6 +319,143 @@ const binary: ShapeFn = (w, h, fill, speed) => {
   };
 };
 
+const waving_top: ShapeFn = (w, h, fill, speed) => {
+  const amp = h * 0.15;
+  const path = `M0,0 L${w},0 L${w},${h - amp} Q${w * 0.75},${h} ${w * 0.5},${h - amp} T0,${h - amp} Z`;
+  return {
+    defs: "",
+    background: `<path d="${path}" fill="${fill}" transform="scale(1, -1) translate(0, -${h})"/>`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
+const peaks: ShapeFn = (w, h, fill, speed) => {
+  const pts = `0,${h} 0,${h * 0.7} ${w * 0.1},${h * 0.8} ${w * 0.25},${h * 0.3} ${w * 0.4},${h * 0.7} ${w * 0.55},${h * 0.1} ${w * 0.75},${h * 0.8} ${w * 0.9},${h * 0.4} ${w},${h * 0.7} ${w},${h}`;
+  return { defs: "", background: `<polygon points="${pts}" fill="${fill}"/>`, viewBox: `0 0 ${w} ${h}` };
+};
+
+const aurora: ShapeFn = (w, h, fill, speed) => {
+  const dur = (10 / (speed || 1)).toFixed(1);
+  const p1 = `M0,${h} L0,${h * 0.7} Q${w * 0.3},${h * 0.3} ${w * 0.6},${h * 0.6} T${w},${h * 0.4} L${w},${h} Z`;
+  const p2 = `M0,${h} L0,${h * 0.6} Q${w * 0.4},${h * 0.8} ${w * 0.7},${h * 0.4} T${w},${h * 0.7} L${w},${h} Z`;
+  return {
+    defs: "",
+    background: `
+      <path d="${p1}" fill="${fill}" opacity="0.4">
+        <animate attributeName="d" dur="${dur}s" repeatCount="indefinite" values="${p1};${p2};${p1}"/>
+      </path>
+      <path d="${p2}" fill="${fill}" opacity="0.6" transform="translate(0, 10)">
+        <animate attributeName="d" dur="${(Number(dur) * 1.2).toFixed(1)}s" repeatCount="indefinite" values="${p2};${p1};${p2}"/>
+      </path>`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
+const arch: ShapeFn = (w, h, fill, speed) => ({
+  defs: "",
+  background: `<path d="M0,${h} L0,${h * 0.3} Q${w / 2},${-h * 0.1} ${w},${h * 0.3} L${w},${h} Z" fill="${fill}"/>`,
+  viewBox: `0 0 ${w} ${h}`,
+});
+
+const egg: ShapeFn = (w, h, fill, speed) => ({
+  defs: "",
+  background: `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${w * 0.45}" ry="${h * 0.48}" fill="${fill}"/>`,
+  viewBox: `0 0 ${w} ${h}`,
+});
+
+const bloom: ShapeFn = (w, h, fill, speed) => {
+  const cx = w / 2, cy = h / 2, r = Math.min(w, h) * 0.45;
+  let petals = "";
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    const px = cx + Math.cos(a) * r * 0.5;
+    const py = cy + Math.sin(a) * r * 0.5;
+    petals += `<ellipse cx="${px}" cy="${py}" rx="${r * 0.4}" ry="${r * 0.6}" transform="rotate(${i * 60} ${px} ${py})" fill="${fill}"/>`;
+  }
+  return { defs: "", background: petals, viewBox: `0 0 ${w} ${h}` };
+};
+
+const dna: ShapeFn = (w, h, fill, speed) => {
+  const nodes = [];
+  for (let i = 0; i < 12; i++) {
+    const x = (i / 11) * w;
+    const y1 = h * 0.3 + Math.sin(i * 0.8) * h * 0.2;
+    const y2 = h * 0.7 - Math.sin(i * 0.8) * h * 0.2;
+    nodes.push(`<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" stroke="${fill}" stroke-width="2" opacity="0.4"/>`);
+    nodes.push(`<circle cx="${x}" cy="${y1}" r="4" fill="${fill}"/>`);
+    nodes.push(`<circle cx="${x}" cy="${y2}" r="4" fill="${fill}"/>`);
+  }
+  return {
+    defs: "",
+    background: `<rect width="${w}" height="${h}" fill="${fill}" opacity="0.1"/>${nodes.join("")}`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
+const galaxy: ShapeFn = (w, h, fill, speed) => {
+  const cx = w / 2, cy = h / 2;
+  const stars = [];
+  for (let i = 0; i < 40; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = Math.random() * Math.min(w, h) * 0.45;
+    stars.push(`<circle cx="${cx + Math.cos(a) * r}" cy="${cy + Math.sin(a) * r}" r="${1 + Math.random() * 2}" fill="${fill}" opacity="${0.2 + Math.random() * 0.8}"/>`);
+  }
+  return {
+    defs: `<radialGradient id="galaxy-grad"><stop offset="0%" stop-color="${fill}"/><stop offset="100%" stop-color="${fill}" stop-opacity="0"/></radialGradient>`,
+    background: `<rect width="${w}" height="${h}" fill="${fill}" opacity="0.05"/><circle cx="${cx}" cy="${cy}" r="${Math.min(w, h) * 0.5}" fill="url(#galaxy-grad)" opacity="0.3"/>${stars.join("")}`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
+const portal: ShapeFn = (w, h, fill, speed) => {
+  const cx = w / 2;
+  const cy = h / 2;
+  const r = Math.min(w, h) * 0.4;
+  return {
+    defs: `<filter id="portal-blur"><feGaussianBlur stdDeviation="3"/></filter>`,
+    background: `<g>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${fill}" stroke-width="8" filter="url(#portal-blur)"/>
+      <circle cx="${cx}" cy="${cy}" r="${r * 0.8}" fill="none" stroke="${fill}" stroke-width="4"/>
+      <animateTransform attributeName="transform" type="scale" values="1;1.05;1" dur="${(3 / (speed || 1)).toFixed(1)}s" repeatCount="indefinite"/>
+    </g>`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
+const gear: ShapeFn = (w, h, fill, speed) => {
+  const cx = w / 2;
+  const cy = h / 2;
+  const r = Math.min(w, h) * 0.35;
+  const teeth = 12;
+  const points: string[] = [];
+  for (let i = 0; i < teeth * 2; i++) {
+    const angle = (i / (teeth * 2)) * Math.PI * 2;
+    const dist = i % 2 === 0 ? r : r * 1.2;
+    points.push(`${cx + Math.cos(angle) * dist},${cy + Math.sin(angle) * dist}`);
+  }
+  return {
+    defs: "",
+    background: `<g>
+      <polygon points="${points.join(" ")}" fill="${fill}"/>
+      <circle cx="${cx}" cy="${cy}" r="${r * 0.4}" fill="white" style="mix-blend-mode:destination-out"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="360 ${cx} ${cy}" dur="${(10 / (speed || 1)).toFixed(1)}s" repeatCount="indefinite"/></g>`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
+const heart: ShapeFn = (w, h, fill, speed) => {
+  const cx = w / 2;
+  const cy = h / 2;
+  const s = Math.min(w, h) * 0.04;
+  return {
+    defs: "",
+    background: `<path d="M0,3 C-3,0 -7,2 -7,5 C-7,8 0,12 0,12 C0,12 7,8 7,5 C7,2 3,0 0,3 Z" fill="${fill}" transform="translate(${cx} ${cy}) scale(${s}) translate(0 -6)">
+      <animateTransform attributeName="transform" type="scale" values="${s};${s * 1.1};${s}" dur="${(2 / (speed || 1)).toFixed(1)}s" repeatCount="indefinite" additive="sum"/>
+    </path>`,
+    viewBox: `0 0 ${w} ${h}`,
+  };
+};
+
 export const SHAPES: Record<ShapeType, ShapeFn> = {
   waving,
   rect,
@@ -348,6 +485,17 @@ export const SHAPES: Record<ShapeType, ShapeFn> = {
   circuit,
   matrix,
   binary,
+  waving_top,
+  peaks,
+  aurora,
+  arch,
+  egg,
+  bloom,
+  dna,
+  galaxy,
+  portal,
+  gear,
+  heart,
 };
 
 export const SHAPE_LIST: { id: ShapeType; label: string }[] = [
@@ -379,4 +527,15 @@ export const SHAPE_LIST: { id: ShapeType; label: string }[] = [
   { id: "circuit", label: "Circuit" },
   { id: "matrix", label: "Matrix" },
   { id: "binary", label: "Binary" },
+  { id: "waving_top", label: "Wave Top" },
+  { id: "peaks", label: "Peaks" },
+  { id: "aurora", label: "Aurora" },
+  { id: "arch", label: "Arch" },
+  { id: "egg", label: "Egg" },
+  { id: "bloom", label: "Bloom" },
+  { id: "dna", label: "DNA" },
+  { id: "galaxy", label: "Galaxy" },
+  { id: "portal", label: "Portal" },
+  { id: "gear", label: "Gear" },
+  { id: "heart", label: "Heart" },
 ];

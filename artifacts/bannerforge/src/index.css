@@ -51,8 +51,56 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Forced dark theme for the BannerForge builder */
-:root, .dark {
+:root {
+  --background: 0 0% 100%;
+  --foreground: 230 20% 6%;
+  --border: 230 15% 92%;
+  --input: 230 15% 94%;
+  --ring: 210 100% 50%;
+
+  --card: 0 0% 98%;
+  --card-foreground: 230 20% 6%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 230 20% 6%;
+
+  --primary: 210 100% 50%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 230 15% 94%;
+  --secondary-foreground: 230 20% 6%;
+
+  --muted: 230 15% 96%;
+  --muted-foreground: 215 15% 45%;
+
+  --accent: 280 80% 55%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --sidebar: 230 15% 98%;
+  --sidebar-foreground: 230 20% 6%;
+  --sidebar-border: 230 15% 92%;
+  --sidebar-primary: 210 100% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 230 15% 94%;
+  --sidebar-accent-foreground: 230 20% 6%;
+  --sidebar-ring: 210 100% 50%;
+
+  --app-font-sans: 'Inter', system-ui, sans-serif;
+  --app-font-serif: Georgia, serif;
+  --app-font-mono: 'JetBrains Mono', Menlo, monospace;
+  --radius: 0.6rem;
+
+  --button-outline: rgba(0,0,0, .05);
+  --badge-outline: rgba(0,0,0, .03);
+  --opaque-button-border-intensity: 2;
+  --elevate-1: rgba(0,0,0, .02);
+  --elevate-2: rgba(0,0,0, .04);
+}
+
+.dark {
   --background: 230 20% 6%;
   --foreground: 210 40% 98%;
   --border: 230 15% 17%;
@@ -88,11 +136,6 @@
   --sidebar-accent: 230 15% 14%;
   --sidebar-accent-foreground: 210 40% 98%;
   --sidebar-ring: 210 100% 60%;
-
-  --app-font-sans: 'Inter', system-ui, sans-serif;
-  --app-font-serif: Georgia, serif;
-  --app-font-mono: 'JetBrains Mono', Menlo, monospace;
-  --radius: 0.6rem;
 
   --button-outline: rgba(255,255,255, .10);
   --badge-outline: rgba(255,255,255, .05);

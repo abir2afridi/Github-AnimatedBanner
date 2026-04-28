@@ -71,6 +71,20 @@ export function buildPattern(
     case "checker":
       inner = `<rect x="0" y="0" width="${sz / 2}" height="${sz / 2}" ${fillOp}/><rect x="${sz / 2}" y="${sz / 2}" width="${sz / 2}" height="${sz / 2}" ${fillOp}/>`;
       break;
+    case "zigzag":
+      inner = `<path d="M0 ${sz * 0.5} L${sz * 0.25} ${sz * 0.25} L${sz * 0.5} ${sz * 0.5} L${sz * 0.75} ${sz * 0.75} L${sz} ${sz * 0.5}" fill="none" ${stroke} stroke-width="1.5"/>`;
+      break;
+    case "polka_dot":
+      inner = `<circle cx="${sz / 2}" cy="${sz / 2}" r="${sz * 0.3}" ${fillOp}/>`;
+      break;
+    case "mesh":
+      inner = `<path d="M0 0 L${sz} ${sz} M${sz} 0 L0 ${sz}" fill="none" ${stroke} stroke-width="0.5"/><circle cx="0" cy="0" r="1.5" ${fillOp}/><circle cx="${sz}" cy="${sz}" r="1.5" ${fillOp}/>`;
+      break;
+    case "waves_3d":
+      inner = `<path d="M 0 ${sz * 0.5} Q ${sz * 0.25} ${sz * 0.25} ${sz * 0.5} ${sz * 0.5} T ${sz} ${sz * 0.5}" fill="none" ${stroke} stroke-width="2">
+            <animate attributeName="stroke-dashoffset" from="0" to="${sz}" dur="3s" repeatCount="indefinite"/>
+          </path>`;
+      break;
   }
 
   const defs = `<pattern id="${id}" patternUnits="userSpaceOnUse" width="${sz}" height="${sz}">${inner}</pattern>`;

@@ -24,6 +24,8 @@ const KEYFRAMES: Record<string, string> = {
   colorShift: `@keyframes bf-colorShift{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}`,
   reveal: `@keyframes bf-reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}`,
   bgWave: `@keyframes bf-bgWave{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`,
+  pulseScale: `@keyframes bf-pulseScale{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}`,
+  slideReveal: `@keyframes bf-slideReveal{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}`,
 };
 
 
@@ -32,14 +34,14 @@ const DURATION: Record<string, number> = {
   slideInTop: 0.6, slideInBottom: 0.6, blink: 1.5, twinkling: 3,
   typewriter: 2, glitch: 0.5, float: 3, pulse: 2, bounce: 1,
   waveText: 1.5, ripple: 2, sparkle: 1.5, rotate: 8, shake: 0.5,
-  neonFlicker: 2.5, colorShift: 6, reveal: 1.5, bgWave: 4,
+  neonFlicker: 2.5, colorShift: 6, reveal: 1.5, bgWave: 4, pulseScale: 2, slideReveal: 1.2,
 };
 
 
 const INFINITE = new Set([
   "blink", "twinkling", "float", "pulse", "bounce",
   "rotate", "neonFlicker", "colorShift", "waveText",
-  "ripple", "sparkle", "glitch", "shake", "bgWave",
+  "ripple", "sparkle", "glitch", "shake", "bgWave", "pulseScale",
 ]);
 
 
@@ -86,4 +88,7 @@ export const ANIMATIONS: { id: AnimationType; label: string }[] = [
   { id: "neonFlicker", label: "Neon Flicker" },
   { id: "colorShift", label: "Color Shift" },
   { id: "reveal", label: "Reveal" },
+  { id: "bgWave", label: "Background Wave" },
+  { id: "pulseScale", label: "Pulse Scale" },
+  { id: "slideReveal", label: "Slide Reveal" },
 ];

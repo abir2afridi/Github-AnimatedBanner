@@ -18,6 +18,10 @@ const PATTERNS: { id: PatternType; label: string }[] = [
   { id: "isometric", label: "Iso" },
   { id: "topography", label: "Topo" },
   { id: "checker", label: "Checker" },
+  { id: "zigzag", label: "Zigzag" },
+  { id: "polka_dot", label: "Polka" },
+  { id: "mesh", label: "Mesh" },
+  { id: "waves_3d", label: "3D Wave" },
 ];
 
 export function PatternsTab() {
@@ -149,6 +153,23 @@ function PatternThumb({ type }: { type: PatternType }) {
       backgroundImage:
         "conic-gradient(#fff 25%, transparent 0 50%, #fff 0 75%, transparent 0)",
       backgroundSize: "12px 12px",
+    },
+    zigzag: {
+      backgroundImage:
+        "linear-gradient(45deg, #fff 1px, transparent 1px), linear-gradient(-45deg, #fff 1px, transparent 1px)",
+      backgroundSize: "12px 6px",
+    },
+    polka_dot: {
+      backgroundImage: "radial-gradient(circle, #fff 3px, transparent 3px)",
+      backgroundSize: "16px 16px",
+    },
+    mesh: {
+      backgroundImage: "linear-gradient(45deg, #fff 0.5px, transparent 0.5px), linear-gradient(-45deg, #fff 0.5px, transparent 0.5px)",
+      backgroundSize: "20px 20px",
+    },
+    waves_3d: {
+      backgroundImage: "radial-gradient(circle at 50% 100%, transparent 40%, #fff 45%, #fff 55%, transparent 60%)",
+      backgroundSize: "20px 10px",
     },
   };
   return (

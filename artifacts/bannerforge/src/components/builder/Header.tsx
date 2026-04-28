@@ -10,9 +10,13 @@ import {
   Check,
   Maximize,
   Keyboard,
+  Moon,
+  Sun,
+  Monitor,
 } from "lucide-react";
+import { useTheme } from "../theme-provider";
 import { useBuilder } from "../../store/builder";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,12 +24,12 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "../ui/popover";
 import { copyText } from "../../lib/url";
 import { SIZE_PRESETS } from "../../lib/sizePresets";
 import { paramsToQuery } from "@workspace/banner-svg";
@@ -40,6 +44,7 @@ export function Header() {
   const setParams = useBuilder((s) => s.set);
   const canUndo = useBuilder((s) => s.historyIndex > 0);
   const canRedo = useBuilder((s) => s.historyIndex < s.history.length - 1);
+  const { setTheme } = useTheme();
   const [shared, setShared] = useState(false);
 
   const onShare = async () => {
@@ -192,6 +197,32 @@ export function Header() {
             </div>
           </PopoverContent>
         </Popover>
+        
+        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="ghost" className="h-8 w-8 px-0">
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              <Sun className="mr-2 h-4 w-4" />
+              <span>Light</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              <Moon className="mr-2 h-4 w-4" />
+              <span>Dark</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              <Monitor className="mr-2 h-4 w-4" />
+              <span>System</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <a
           href="https://github.com"

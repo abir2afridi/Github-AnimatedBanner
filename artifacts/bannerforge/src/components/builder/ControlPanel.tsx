@@ -17,7 +17,7 @@ import { EffectsTab } from "./tabs/EffectsTab";
 import { PresetsTab } from "./tabs/PresetsTab";
 
 const TABS = [
-  { id: "shapes", label: "Shapes", icon: Grid3x3 },
+  { id: "shapes", label: "Variation", icon: Grid3x3 },
   { id: "colors", label: "Colors", icon: Palette },
   { id: "text", label: "Text", icon: Type },
   { id: "patterns", label: "Patterns", icon: Hash },
@@ -42,11 +42,10 @@ export function ControlPanel() {
               type="button"
               onClick={() => setActiveTab(t.id)}
               title={t.label}
-              className={`mx-1.5 h-12 rounded-md flex flex-col items-center justify-center gap-0.5 hover-elevate transition-colors ${
-                active
+              className={`mx-1.5 h-12 rounded-md flex flex-col items-center justify-center gap-0.5 hover-elevate transition-colors ${active
                   ? "bg-sidebar-primary/10 text-sidebar-primary"
                   : "text-sidebar-foreground/70"
-              }`}
+                }`}
             >
               <Icon className="w-4 h-4" />
               <span className="text-[9px] uppercase tracking-wide">{t.label}</span>

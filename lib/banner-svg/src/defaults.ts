@@ -17,6 +17,8 @@ export function createDefaultTextLayer(overrides: Partial<TextLayer> = {}): Text
     textTransform: "none",
     textDecoration: "none",
     rotate: 0,
+    skewX: 0,
+    skewY: 0,
     opacity: 1,
     gradient: false,
     gradientColors: ["#ffffff", "#a0c4ff"],
@@ -89,4 +91,8 @@ export const DEFAULT_PARAMS: BannerParams = {
       animationDelay: 200,
     }),
   ],
+  borderWidth: 0,
+  borderColor: "#ffffff",
+  borderRadius: 0,
+  borderStyle: "none",
 };

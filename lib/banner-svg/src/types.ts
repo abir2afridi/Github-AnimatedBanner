@@ -26,7 +26,18 @@ export type ShapeType =
   | "grid"
   | "circuit"
   | "matrix"
-  | "binary";
+  | "binary"
+  | "waving_top"
+  | "peaks"
+  | "aurora"
+  | "arch"
+  | "egg"
+  | "bloom"
+  | "dna"
+  | "galaxy"
+  | "portal"
+  | "gear"
+  | "heart";
 
 export type AnimationType =
   | "none"
@@ -50,7 +61,10 @@ export type AnimationType =
   | "shake"
   | "neonFlicker"
   | "colorShift"
-  | "reveal";
+  | "reveal"
+  | "bgWave"
+  | "pulseScale"
+  | "slideReveal";
 
 export type ColorPreset =
   | "sunset"
@@ -96,7 +110,12 @@ export type PatternType =
   | "noise"
   | "isometric"
   | "topography"
-  | "checker";
+  | "checker"
+  | "zigzag"
+  | "polka_dot"
+  | "mesh"
+  | "waves_3d"
+  | "pixel";
 
 export type ParticleType =
   | "none"
@@ -108,7 +127,11 @@ export type ParticleType =
   | "embers"
   | "matrix"
   | "hearts"
-  | "fireflies";
+  | "fireflies"
+  | "rain"
+  | "rockets"
+  | "blocks"
+  | "programming";
 
 export type OverlayType =
   | "none"
@@ -116,9 +139,29 @@ export type OverlayType =
   | "scanlines"
   | "grain"
   | "lightLeak"
-  | "fog";
+  | "fog"
+  | "noise"
+  | "texture"
+  | "grid"
+  | "glitch"
+  | "crt"
+  | "duotone"
+  | "prism"
+  | "vhs"
+  | "hologram"
+  | "water"
+  | "fire"
+  | "matrix"
+  | "aurora"
+  | "lava"
+  | "energy"
+  | "circuit"
+  | "dust"
+  | "paper"
+  | "canvas"
+  | "snow";
 
-export type ShadowType = "none" | "soft" | "hard" | "neon";
+export type ShadowType = "none" | "soft" | "hard" | "neon" | "floating" | "inset" | "glow" | "glass" | "3d" | "layered" | "depth";
 
 export interface GradientStop {
   color: string;
@@ -140,6 +183,8 @@ export interface TextLayer {
   textTransform: "none" | "uppercase" | "lowercase";
   textDecoration: "none" | "underline";
   rotate: number;
+  skewX: number;
+  skewY: number;
   opacity: number;
   // gradient
   gradient: boolean;
@@ -198,10 +243,19 @@ export interface BannerParams {
   contrast: number; // 0..2
   saturation: number; // 0..2
   hueRotate: number; // 0..360
+  shadowColor?: string;
+  shadowBlur?: number;
 
   // Animation (global / for shape)
   animationSpeed: number;
 
   // Text Layers
   textLayers: TextLayer[];
+
+  // Border
+  borderWidth: number;
+  borderColor: string;
+  borderRadius: number;
+  borderStyle?: "none" | "solid" | "dashed" | "dotted" | "glass" | "gradient" | "marching" | "zigzag" | "double" | "groove" | "ridge" | "neon" | "frame" | "bracket";
+  cornerStyle?: "rounded" | "cut" | "beveled";
 }
