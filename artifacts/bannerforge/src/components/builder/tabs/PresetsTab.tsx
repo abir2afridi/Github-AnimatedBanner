@@ -24,6 +24,7 @@ const CATEGORIES = [
   "Soft",
   "Dark Fantasy",
   "Generic",
+  "Capsule",
 ] as const;
 
 export function PresetsTab() {

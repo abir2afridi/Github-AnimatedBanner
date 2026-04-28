@@ -23,7 +23,8 @@ export interface BannerPreset {
     | "Architectural"
     | "Soft"
     | "Dark Fantasy"
-    | "Generic";
+    | "Generic"
+    | "Capsule";
   params: BannerParams;
 }
 
@@ -1777,6 +1778,72 @@ export const GALLERY_PRESETS: BannerPreset[] = [
     overlayColor: "#d97706",
     textLayers: [
       createDefaultTextLayer({ text: "FRONTIER", fontFamily: "Rye", fontSize: 90, fontColor: "#fcd34d" }),
+    ],
+  }),
+
+  // ───────────────────────── Capsule ─────────────────────────
+  preset("Capsule Wave", "Capsule", {
+    type: "waving",
+    colorPreset: "ocean",
+    gradientStops: presetToStops("ocean"),
+    textLayers: [
+      createDefaultTextLayer({ text: "Capsule Render", fontFamily: "Poppins", fontSize: 70, fontWeight: 800, animation: "fadeIn" }),
+      createDefaultTextLayer({ text: "Simple & Elegant", fontSize: 20, alignY: 75, opacity: 0.85 }),
+    ],
+  }),
+  preset("Capsule Soft", "Capsule", {
+    type: "soft",
+    colorPreset: "candy",
+    gradientStops: presetToStops("candy"),
+    textLayers: [
+      createDefaultTextLayer({ text: "Soft Aesthetic", fontFamily: "Pacifico", fontSize: 75, fontWeight: 400, animation: "float" }),
+    ],
+  }),
+  preset("Capsule Slice", "Capsule", {
+    type: "slice",
+    colorPreset: "toxic",
+    gradientStops: presetToStops("toxic"),
+    pattern: "grid",
+    patternOpacity: 0.1,
+    textLayers: [
+      createDefaultTextLayer({ text: "SLICE_DESIGN", fontFamily: "Orbitron", fontSize: 65, fontWeight: 700, animation: "glitch" }),
+    ],
+  }),
+  preset("Capsule Cylinder", "Capsule", {
+    type: "cylinder",
+    colorPreset: "midnight",
+    gradientStops: presetToStops("midnight"),
+    textLayers: [
+      createDefaultTextLayer({ text: "CYLINDER", fontFamily: "Anton", fontSize: 80, fontWeight: 900, letterSpacing: 4 }),
+    ],
+  }),
+  preset("Capsule Rounded", "Capsule", {
+    type: "rounded",
+    colorPreset: "aurora",
+    gradientStops: presetToStops("aurora"),
+    particles: "stars",
+    particleCount: 40,
+    textLayers: [
+      createDefaultTextLayer({ text: "ROUNDED", fontFamily: "Outfit", fontSize: 70, fontWeight: 800, animation: "scaleIn" }),
+    ],
+  }),
+  preset("Capsule Transparent", "Capsule", {
+    type: "soft",
+    color: "rgba(0,0,0,0)",
+    gradientStops: [{ color: "rgba(255,255,255,0.05)", position: 0 }, { color: "rgba(255,255,255,0.02)", position: 100 }],
+    borderStyle: "glass",
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.2)",
+    textLayers: [
+      createDefaultTextLayer({ text: "TRANSPARENT", fontFamily: "Inter", fontSize: 60, fontWeight: 800, fontColor: "#ffffff", opacity: 0.9, animation: "fadeIn" }),
+    ],
+  }),
+  preset("Capsule Rect", "Capsule", {
+    type: "rect",
+    colorPreset: "monochrome",
+    gradientStops: presetToStops("monochrome"),
+    textLayers: [
+      createDefaultTextLayer({ text: "RECTANGLE", fontFamily: "Bebas Neue", fontSize: 90, fontWeight: 700, letterSpacing: 8 }),
     ],
   }),
 ];
