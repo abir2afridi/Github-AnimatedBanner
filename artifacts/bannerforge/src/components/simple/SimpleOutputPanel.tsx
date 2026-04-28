@@ -59,6 +59,7 @@ export function SimpleOutputPanel() {
       desc: config.subtitle,
       descFontSize: String(config.subtitleSize),
       descColor: config.subtitleColor,
+      static: "1",
       v: String(Date.now()),
     }).toString();
 

@@ -8,6 +8,7 @@ export default function handler(req: Request): Response {
   try {
     const url = new URL(req.url);
     const params = parseQueryParams(url.searchParams);
+    const isStatic = url.searchParams.get("static") === "1" || url.searchParams.get("static") === "true";
     const githubSafeParams = {
       ...params,
       textLayers: params.textLayers.map((l) => ({
@@ -15,7 +16,10 @@ export default function handler(req: Request): Response {
         fontFamily: "system-ui",
       })),
     };
-    const svg = generateBannerSVG(githubSafeParams);
+    let svg = generateBannerSVG(githubSafeParams);
+    if (isStatic) {
+      svg = svg.replace(/<animate[^>]*\/>/g, "");
+    }
 
     return new Response(svg, {
       status: 200,
