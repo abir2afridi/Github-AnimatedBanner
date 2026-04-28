@@ -170,6 +170,10 @@ export function parseQueryParams(q: URLSearchParams): BannerParams {
     hueRotate: n(q.get("hueRotate"), 0, 0, 360),
     animationSpeed: n(q.get("speed"), 1, 0.1, 5),
     textLayers: layers.length > 0 ? layers : DEFAULT_PARAMS.textLayers,
+    borderWidth: DEFAULT_PARAMS.borderWidth,
+    borderColor: DEFAULT_PARAMS.borderColor,
+    borderRadius: DEFAULT_PARAMS.borderRadius,
+    borderStyle: DEFAULT_PARAMS.borderStyle,
   };
 }
 

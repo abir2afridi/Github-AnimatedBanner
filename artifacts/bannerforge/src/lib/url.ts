@@ -1,5 +1,7 @@
 export function getApiBase(): string {
   if (typeof window === "undefined") return "";
+  const fromEnv = import.meta.env.VITE_API_BASE;
+  if (typeof fromEnv === "string" && fromEnv.length > 0) return fromEnv;
   return `${window.location.origin}/api`;
 }
 
