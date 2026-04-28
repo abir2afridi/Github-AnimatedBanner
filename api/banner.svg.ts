@@ -8,7 +8,14 @@ export default function handler(req: Request): Response {
   try {
     const url = new URL(req.url);
     const params = parseQueryParams(url.searchParams);
-    const svg = generateBannerSVG(params);
+    const githubSafeParams = {
+      ...params,
+      textLayers: params.textLayers.map((l) => ({
+        ...l,
+        fontFamily: "system-ui",
+      })),
+    };
+    const svg = generateBannerSVG(githubSafeParams);
 
     return new Response(svg, {
       status: 200,
