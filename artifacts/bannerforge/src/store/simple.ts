@@ -6,7 +6,7 @@ import { decodeConfig, encodeConfig } from "../lib/simple/share";
 
 interface SimpleState {
   config: BannerConfig;
-  activeTab: "presets" | "main" | "background" | "decorations" | "fonts";
+  activeTab: "presets" | "main" | "background" | "decorations" | "fonts" | "export";
   set: (updater: (c: BannerConfig) => BannerConfig) => void;
   setActiveTab: (t: SimpleState["activeTab"]) => void;
   reset: () => void;

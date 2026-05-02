@@ -5,8 +5,12 @@ import { SimpleOutputPanel } from "./SimpleOutputPanel";
 import { motion } from "framer-motion";
 import { useSimple } from "../../store/simple";
 import { 
-  Expand
+  Expand,
+  LayoutPanelLeft,
+  Download,
+  LayoutGrid
 } from "lucide-react";
+import { PresetsTab } from "./tabs/PresetsTab";
 
 export default function SimpleMode() {
   const config = useSimple((s) => s.config);
@@ -15,6 +19,7 @@ export default function SimpleMode() {
   
   const wrapRef = useRef<HTMLDivElement>(null);
   const [containerW, setContainerW] = useState(0);
+  const [mobileTab, setMobileTab] = useState<"edit" | "export">("edit");
 
   useEffect(() => {
     hydrate();
@@ -46,15 +51,21 @@ export default function SimpleMode() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex h-screen w-full overflow-hidden bg-background"
+      className="flex flex-col lg:flex-row h-[100dvh] w-full overflow-hidden bg-background"
     >
-      {/* Left: Configuration Panel */}
-      <aside className="w-[340px] shrink-0 h-full border-r border-border shadow-xl z-20">
-        <SimpleControlPanel />
+      {/* Left: Presets Panel (Always visible on Desktop) */}
+      <aside className={`hidden xl:flex flex-col w-[350px] shrink-0 h-full border-r border-border bg-secondary/5 z-20 order-1 overflow-hidden`}>
+        <div className="p-4 border-b border-border bg-background flex items-center gap-2">
+          <LayoutGrid className="w-4 h-4 text-primary" />
+          <h2 className="text-sm font-bold uppercase tracking-wider">Presets Library</h2>
+        </div>
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
+           <PresetsTab />
+        </div>
       </aside>
 
       {/* Center: Live Preview Area */}
-      <main className="flex-1 h-full bg-secondary/5 relative flex flex-col overflow-hidden">
+      <main className="h-[40dvh] lg:h-full lg:flex-1 bg-secondary/5 relative flex flex-col overflow-hidden shrink-0 order-1 lg:order-2 z-10 border-b border-border lg:border-none">
         {/* Background Gradients for Depth */}
         <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary blur-[120px]" />
@@ -64,7 +75,7 @@ export default function SimpleMode() {
         {/* Banner Canvas Area */}
         <div 
           ref={wrapRef}
-          className="flex-1 relative z-10 overflow-auto flex items-center justify-center p-12 custom-scrollbar"
+          className="flex-1 relative z-10 overflow-auto flex items-center justify-center p-4 lg:p-12 custom-scrollbar"
         >
           <div
             style={{
@@ -96,16 +107,34 @@ export default function SimpleMode() {
         
         {/* Zoom Footer */}
         {config.miniature && fitScale < 1 && (
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur-xl border border-border px-4 py-2 rounded-full text-[10px] text-muted-foreground flex items-center gap-2 shadow-2xl z-20">
-            <Expand size={12} className="text-primary" />
-            Scaled down to <span className="font-bold text-primary">{Math.round(fitScale * 100)}%</span> to fit your screen
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur-xl border border-border px-3 py-1.5 rounded-full text-[9px] text-muted-foreground flex items-center gap-2 shadow-2xl z-20 whitespace-nowrap">
+            <Expand size={10} className="text-primary" />
+            <span className="font-bold text-primary">{Math.round(fitScale * 100)}%</span> Zoom
           </div>
         )}
       </main>
 
-      {/* Right: Export/Output Panel */}
-      <aside className="w-[320px] shrink-0 h-full border-l border-border shadow-2xl z-20">
-        <SimpleOutputPanel />
+      {/* Mobile/Tablet Tab Toggle (Visible on small screens) */}
+      <div className="flex lg:hidden bg-background border-b border-border z-20 shrink-0 shadow-sm order-2">
+        <button 
+          onClick={() => setMobileTab("edit")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${mobileTab === 'edit' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-muted-foreground hover:bg-secondary/20'}`}
+        >
+          <LayoutGrid className="w-4 h-4" />
+          Presets
+        </button>
+        <button 
+          onClick={() => setMobileTab("export")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${mobileTab === 'export' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-muted-foreground hover:bg-secondary/20'}`}
+        >
+          <LayoutPanelLeft className="w-4 h-4" />
+          Customize
+        </button>
+      </div>
+
+      {/* Right: Configuration & Export Panel */}
+      <aside className={`${mobileTab === "edit" ? "hidden" : "flex"} lg:flex flex-col w-full lg:w-[350px] shrink-0 lg:h-full border-l border-border shadow-xl z-20 order-3 lg:order-3 overflow-hidden`}>
+        <SimpleControlPanel />
       </aside>
     </motion.div>
   );

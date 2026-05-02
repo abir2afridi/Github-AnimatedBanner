@@ -3,7 +3,7 @@ import { ANIMATIONS, AVAILABLE_FONTS } from "@workspace/banner-svg";
 import { useBuilder } from "../../../store/builder";
 import { ColorSwatch } from "../ColorSwatch";
 import { LabelSlider } from "../Slider";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../ui/button";
 
 export function TextTab() {
   const params = useBuilder((s) => s.params);

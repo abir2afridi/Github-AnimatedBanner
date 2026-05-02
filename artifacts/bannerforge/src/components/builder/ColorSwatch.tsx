@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface Props {
   value: string;

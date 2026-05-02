@@ -62,12 +62,7 @@ export function OutputPanel() {
   }, [params]);
 
   return (
-    <div className="flex flex-col h-full min-h-0 bg-card/40">
-      <div className="px-4 py-3 border-b border-border">
-        <div className="text-xs uppercase tracking-wide text-muted-foreground">
-          Embed your banner
-        </div>
-      </div>
+    <div className="flex flex-col h-full min-h-0">
       <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin p-4 space-y-4">
         <Tabs defaultValue="markdown">
           <TabsList className="w-full grid grid-cols-3">

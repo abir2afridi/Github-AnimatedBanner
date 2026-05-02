@@ -18,8 +18,36 @@ export function MainTab() {
     { id: "right", Icon: AlignRight },
   ] as const;
 
+  const canvasSizes = [
+    { name: "Slim", w: 800, h: 200 },
+    { name: "Std", w: 800, h: 400 },
+    { name: "Tall", w: 800, h: 600 },
+    { name: "Insta", w: 1080, h: 1080 },
+  ];
+
   return (
-    <div className="space-y-6">
+    <div className="p-4 space-y-6">
+      <div className="space-y-2">
+        <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">
+          Canvas Size Presets
+        </label>
+        <div className="grid grid-cols-4 gap-2">
+          {canvasSizes.map((size) => (
+            <button
+              key={size.name}
+              onClick={() => update({ width: size.w, height: size.h })}
+              className={`h-10 rounded-xl border border-border text-[10px] font-bold transition-all ${
+                config.width === size.w && config.height === size.h
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 border-primary"
+                  : "bg-secondary/30 text-muted-foreground hover:bg-secondary/50"
+              }`}
+            >
+              {size.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="space-y-2">
         <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1">
           Title

@@ -171,6 +171,10 @@ function PatternThumb({ type }: { type: PatternType }) {
       backgroundImage: "radial-gradient(circle at 50% 100%, transparent 40%, #fff 45%, #fff 55%, transparent 60%)",
       backgroundSize: "20px 10px",
     },
+    pixel: {
+      backgroundImage: "conic-gradient(#fff 25%, transparent 0 50%, #fff 0 75%, transparent 0)",
+      backgroundSize: "4px 4px",
+    },
   };
   return (
     <div

@@ -22,21 +22,24 @@ export interface BannerConfig {
   decoration: string | null;
   decorationSize: number;
   decorationOpacity: number;
+  decorationAlign: "left" | "right" | "center";
+  animation: "none" | "slow" | "medium" | "fast";
+  glassmorphism: boolean;
   miniature: boolean;
 }
 
 export const DEFAULT_CONFIG: BannerConfig = {
   width: 840,
   height: 280,
-  padding: 25,
+  padding: 40,
   title: "Hey! I am ...",
   titleFont: "Red Hat Display",
-  titleSize: 40,
+  titleSize: 42,
   titleColor: "#ffffff",
   subtitle: "Fullstack developer",
   subtitleFont: "Red Hat Display",
   subtitleSize: 20,
-  subtitleColor: "#ffffff",
+  subtitleColor: "#8b949e",
   textAlign: "center",
   bgColor: "#161b22",
   pattern: "github-pattern",
@@ -45,9 +48,12 @@ export const DEFAULT_CONFIG: BannerConfig = {
   patternOpacity: 0.05,
   borderColor: "#30363d",
   borderWidth: 1,
-  borderRadius: 7,
+  borderRadius: 16,
   decoration: null,
-  decorationSize: 100,
-  decorationOpacity: 1,
+  decorationSize: 120,
+  decorationOpacity: 0.8,
+  decorationAlign: "right",
+  animation: "none",
+  glassmorphism: false,
   miniature: false,
 };

@@ -26,7 +26,7 @@ function App() {
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
             <Router />
           </WouterRouter>
-          <SonnerToaster theme="dark" position="top-right" richColors closeButton />
+          <SonnerToaster theme="dark" position="bottom-right" richColors closeButton />
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>

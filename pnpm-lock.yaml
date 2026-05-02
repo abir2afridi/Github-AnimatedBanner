@@ -225,6 +225,10 @@ importers:
         version: 3.1.0
 
   artifacts/bannerforge:
+    dependencies:
+      '@lottiefiles/dotlottie-react':
+        specifier: ^0.19.0
+        version: 0.19.0(react@19.1.0)
     devDependencies:
       '@hookform/resolvers':
         specifier: ^3.10.0
@@ -848,6 +852,14 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@lottiefiles/dotlottie-react@0.19.0':
+    resolution: {integrity: sha512-SMhHwE68WiHdV7vVWHuCU3YD2tDAaNQmyGMmhSP7uXOaILoLRbdRRWpk9NsUxFPrwYuqKQ+3FNQw6bAJ19HCAg==}
+    peerDependencies:
+      react: ^17 || ^18 || ^19
+
+  '@lottiefiles/dotlottie-web@0.71.0':
+    resolution: {integrity: sha512-CliQttL0Rk0or/aDQkqUJXnC9Cm5TxzNdOqy/YlzKlU6mu+XgTMwyt5/HpPiltlMeaqBmM9mOzfevpyP4QmudQ==}
 
   '@mapbox/node-pre-gyp@2.0.3':
     resolution: {integrity: sha512-uwPAhccfFJlsfCxMYTwOdVfOz3xqyj8xYL3zJj8f0pb30tLohnnFPhLuqp4/qoEz8sNxe4SESZedcBojRefIzg==}
@@ -3834,6 +3846,13 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@lottiefiles/dotlottie-react@0.19.0(react@19.1.0)':
+    dependencies:
+      '@lottiefiles/dotlottie-web': 0.71.0
+      react: 19.1.0
+
+  '@lottiefiles/dotlottie-web@0.71.0': {}
 
   '@mapbox/node-pre-gyp@2.0.3':
     dependencies:

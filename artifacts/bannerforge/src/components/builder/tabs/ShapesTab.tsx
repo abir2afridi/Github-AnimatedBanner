@@ -45,7 +45,7 @@ export function ShapesTab() {
       variants.push(v);
     }
     return variants;
-  }, [params.id, params.type, params.colorPreset, params.gradientStops]); // Only regenerate if core identity changes
+  }, [params.type, params.colorPreset, params.gradientStops]); // Only regenerate if core identity changes
 
   return (
     <div className="space-y-6">

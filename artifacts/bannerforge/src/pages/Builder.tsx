@@ -7,6 +7,8 @@ import { useBuilder } from "../store/builder";
 import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
 import SimpleMode from "../components/simple/SimpleMode";
 import { AnimatePresence } from "framer-motion";
+import { LayoutTemplate } from "lucide-react";
+import { PresetsTab } from "../components/builder/tabs/PresetsTab";
 
 export default function Builder() {
   const loadFromQuery = useBuilder((s) => s.loadFromQueryString);
@@ -40,16 +42,22 @@ export default function Builder() {
           ) : (
             <div 
               key="advanced-mode"
-              className="h-full w-full grid grid-cols-1 lg:grid-cols-[380px_1fr_360px]"
+              className="h-full w-full grid grid-cols-1 lg:grid-cols-[350px_1fr_350px]"
             >
-              <aside className="border-r border-border bg-card/40 min-h-0 overflow-hidden">
-                <ControlPanel />
+              <aside className="border-r border-border bg-card/40 min-h-0 overflow-hidden flex flex-col">
+                <div className="p-4 border-b border-border bg-background flex items-center gap-2 shrink-0">
+                  <LayoutTemplate className="w-4 h-4 text-primary" />
+                  <h2 className="text-sm font-bold uppercase tracking-wider">Presets Library</h2>
+                </div>
+                <div className="flex-1 overflow-y-auto custom-scrollbar px-4 py-4">
+                  <PresetsTab />
+                </div>
               </aside>
               <main className="min-h-0 overflow-hidden">
                 <PreviewPanel />
               </main>
               <aside className="border-l border-border bg-card/40 min-h-0 overflow-hidden hidden lg:block">
-                <OutputPanel />
+                <ControlPanel />
               </aside>
             </div>
           )}

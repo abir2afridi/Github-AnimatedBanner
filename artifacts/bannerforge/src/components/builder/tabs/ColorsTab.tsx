@@ -8,7 +8,7 @@ import {
 import { useBuilder } from "../../../store/builder";
 import { ColorSwatch } from "../ColorSwatch";
 import { LabelSlider } from "../Slider";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../ui/button";
 
 const PRESET_IDS = Object.keys(COLOR_PRESETS) as Array<Exclude<ColorPreset, "custom">>;
 

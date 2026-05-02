@@ -6,7 +6,9 @@ import {
   Sparkles,
   Wand,
   LayoutTemplate,
+  Download,
 } from "lucide-react";
+import { OutputPanel } from "./OutputPanel";
 import { useBuilder } from "../../store/builder";
 import { ShapesTab } from "./tabs/ShapesTab";
 import { ColorsTab } from "./tabs/ColorsTab";
@@ -23,7 +25,7 @@ const TABS = [
   { id: "patterns", label: "Patterns", icon: Hash },
   { id: "particles", label: "Particles", icon: Sparkles },
   { id: "effects", label: "Effects", icon: Wand },
-  { id: "presets", label: "Presets", icon: LayoutTemplate },
+  { id: "export", label: "Export", icon: Download },
 ] as const;
 
 export function ControlPanel() {
@@ -60,7 +62,7 @@ export function ControlPanel() {
         {activeTab === "patterns" ? <PatternsTab /> : null}
         {activeTab === "particles" ? <ParticlesTab /> : null}
         {activeTab === "effects" ? <EffectsTab /> : null}
-        {activeTab === "presets" ? <PresetsTab /> : null}
+        {activeTab === "export" ? <OutputPanel /> : null}
       </div>
     </div>
   );

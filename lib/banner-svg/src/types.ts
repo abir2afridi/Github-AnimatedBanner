@@ -159,7 +159,8 @@ export type OverlayType =
   | "dust"
   | "paper"
   | "canvas"
-  | "snow";
+  | "snow"
+  | "glass";
 
 export type ShadowType = "none" | "soft" | "hard" | "neon" | "floating" | "inset" | "glow" | "glass" | "3d" | "layered" | "depth";
 

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ExternalLink, Moon, Sun, RefreshCw, Maximize2 } from "lucide-react";
 import { generateBannerSVG } from "@workspace/banner-svg";
 import { useBuilder } from "../../store/builder";
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 
 export function PreviewPanel() {
   const params = useBuilder((s) => s.params);

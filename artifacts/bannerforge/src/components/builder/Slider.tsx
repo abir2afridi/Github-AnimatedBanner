@@ -1,4 +1,4 @@
-import { Slider as UISlider } from "@/components/ui/slider";
+import { Slider as UISlider } from "../ui/slider";
 
 interface Props {
   label: string;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import {
   Undo2,
   Redo2,
@@ -105,8 +106,12 @@ export function Header() {
   return (
     <header className="h-14 shrink-0 border-b border-border bg-sidebar flex items-center justify-between px-4 gap-2">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="w-8 h-8 rounded-md bg-gradient-to-br from-primary via-accent to-primary grid place-items-center text-primary-foreground shrink-0">
-          <Sparkles className="w-4 h-4" />
+        <div className="w-10 h-10 shrink-0">
+          <DotLottieReact
+            src="https://lottie.host/85ec5298-49d5-4c8d-9d65-bb087705e154/itvccM1zkB.lottie"
+            loop
+            autoplay
+          />
         </div>
         <div className="min-w-0">
           <div className="text-sm font-semibold tracking-tight leading-tight truncate">

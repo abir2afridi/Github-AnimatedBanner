@@ -86,16 +86,7 @@ export function SimpleOutputPanel() {
   };
 
   return (
-    <div className="h-full bg-background flex flex-col">
-      <div className="p-4 border-b border-border bg-secondary/10 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Zap className="w-4 h-4 text-primary" />
-        </div>
-        <div>
-          <h2 className="text-sm font-bold">Export Center</h2>
-          <p className="text-[10px] text-muted-foreground">Ready to ship your design</p>
-        </div>
-      </div>
+    <div className="h-full bg-background flex flex-col pt-4">
 
       <div className="flex-1 p-6 space-y-8 overflow-y-auto custom-scrollbar">
         {/* Direct Actions */}
