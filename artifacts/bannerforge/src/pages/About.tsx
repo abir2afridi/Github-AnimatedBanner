@@ -27,7 +27,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="h-screen w-full flex flex-col text-foreground bg-background">
+    <div className="min-h-dvh w-full flex flex-col text-foreground bg-background">
       <Header />
 
       <motion.main

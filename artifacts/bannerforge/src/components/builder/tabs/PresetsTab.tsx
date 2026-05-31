@@ -56,7 +56,7 @@ export function PresetsTab() {
               placeholder="Search presets..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-7 pr-7 py-1.5 w-40 bg-muted/50 border border-border rounded-full text-[11px] focus:outline-none focus:ring-1 focus:ring-primary/30 focus:border-primary/50 transition-all"
+              className="pl-7 pr-7 py-1.5 w-32 sm:w-40 bg-muted/50 border border-border rounded-full text-[11px] focus:outline-none focus:ring-1 focus:ring-primary/30 focus:border-primary/50 transition-all"
             />
             {search && (
               <button 

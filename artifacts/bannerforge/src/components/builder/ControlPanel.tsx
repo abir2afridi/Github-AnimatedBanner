@@ -28,13 +28,13 @@ const TABS = [
   { id: "export", label: "Export", icon: Download },
 ] as const;
 
-export function ControlPanel() {
+export function ControlPanel({ compact }: { compact?: boolean }) {
   const activeTab = useBuilder((s) => s.activeTab);
   const setActiveTab = useBuilder((s) => s.setActiveTab);
 
   return (
-    <div className="flex h-full min-h-0">
-      <div className="w-14 shrink-0 bg-sidebar border-r border-sidebar-border flex flex-col py-2 gap-1">
+    <div className="flex h-full min-h-0 w-full">
+      <div className={`shrink-0 bg-sidebar border-r border-sidebar-border flex flex-col gap-1 ${compact ? "w-10 py-1" : "w-14 py-2"}`}>
         {TABS.map((t) => {
           const Icon = t.icon;
           const active = activeTab === t.id;
@@ -44,18 +44,18 @@ export function ControlPanel() {
               type="button"
               onClick={() => setActiveTab(t.id)}
               title={t.label}
-              className={`mx-1.5 h-12 rounded-md flex flex-col items-center justify-center gap-0.5 hover-elevate transition-colors ${active
+              className={`rounded-md flex flex-col items-center justify-center gap-0.5 hover-elevate transition-colors ${compact ? "mx-1 h-9" : "mx-1.5 h-12"} ${active
                   ? "bg-sidebar-primary/10 text-sidebar-primary"
                   : "text-sidebar-foreground/70"
                 }`}
             >
-              <Icon className="w-4 h-4" />
-              <span className="text-[9px] uppercase tracking-wide">{t.label}</span>
+              <Icon className={compact ? "w-3.5 h-3.5" : "w-4 h-4"} />
+              <span className={`uppercase tracking-wide ${compact ? "text-[7px]" : "text-[9px]"}`}>{t.label}</span>
             </button>
           );
         })}
       </div>
-      <div className="flex-1 min-w-0 overflow-y-auto scrollbar-thin px-4 py-4">
+      <div className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden scrollbar-thin px-4 py-4">
         {activeTab === "shapes" ? <ShapesTab /> : null}
         {activeTab === "colors" ? <ColorsTab /> : null}
         {activeTab === "text" ? <TextTab /> : null}

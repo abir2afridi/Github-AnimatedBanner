@@ -57,27 +57,27 @@ export function SimpleControlPanel() {
           <Palette className="w-4 h-4 text-primary" />
           Quick Editor
         </h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 px-2 text-[10px] font-bold text-muted-foreground hover:text-foreground hover:bg-secondary/80 gap-1.5"
+            className="h-7 px-1.5 sm:px-2 text-[10px] font-bold text-muted-foreground hover:text-foreground hover:bg-secondary/80 gap-1"
             onClick={reset}
             title="Reset to Default"
           >
             <RotateCcw className="w-3 h-3" />
-            RESET
+            <span className="hidden sm:inline">RESET</span>
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 px-2 text-[10px] font-bold text-primary hover:text-primary hover:bg-primary/10 gap-1.5"
+            className="h-7 px-1.5 sm:px-2 text-[10px] font-bold text-primary hover:text-primary hover:bg-primary/10 gap-1"
             onClick={randomize}
           >
             <Sparkles className="w-3 h-3" />
-            RANDOMIZE
+            <span className="hidden sm:inline">RANDOMIZE</span>
           </Button>
-          <div className="flex items-center gap-1 bg-background/50 p-0.5 rounded-lg border border-border">
+          <div className="flex items-center gap-0.5 sm:gap-1 bg-background/50 p-0.5 rounded-lg border border-border">
 
           <Button
             variant={config.miniature ? "secondary" : "ghost"}
@@ -102,12 +102,12 @@ export function SimpleControlPanel() {
     </div>
 
       {/* Tabs Navigation */}
-      <div className="flex p-1 bg-secondary/30 border-b border-border">
+      <div className="flex p-1 bg-secondary/30 border-b border-border overflow-x-hidden">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-md transition-all ${activeTab === tab.id
+            className={`flex-1 flex flex-col items-center justify-center py-1.5 sm:py-2 px-1 rounded-md transition-all ${activeTab === tab.id
                 ? "bg-background text-primary shadow-sm"
                 : "text-muted-foreground hover:text-foreground hover:bg-background/50"
               }`}
@@ -116,7 +116,7 @@ export function SimpleControlPanel() {
             <span className="text-[10px] font-medium uppercase tracking-tight relative">
               {tab.label}
               {"count" in tab && (
-                <span className="absolute -top-3 -right-4 bg-primary/20 text-primary text-[7px] font-bold px-1 rounded-full border border-primary/20">
+                <span className="absolute -top-2 -right-3 bg-primary/20 text-primary text-[7px] font-bold px-1 rounded-full border border-primary/20">
                   {tab.count}
                 </span>
               )}
@@ -127,7 +127,7 @@ export function SimpleControlPanel() {
       </div>
 
       {/* Tab Content Area */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
         {activeTab === "main" && <MainTab />}
         {activeTab === "background" && <BackgroundTab />}
         {activeTab === "decorations" && <DecorationsTab />}

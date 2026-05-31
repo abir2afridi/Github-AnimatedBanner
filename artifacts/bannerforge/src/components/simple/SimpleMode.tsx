@@ -48,7 +48,7 @@ export default function SimpleMode() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex flex-col lg:flex-row h-dvh w-full overflow-hidden bg-background"
+      className="flex flex-col lg:flex-row h-full w-full overflow-hidden bg-background"
     >
       {/* Left: Presets Panel (Desktop) */}
       <aside className="hidden lg:flex flex-col w-75 xl:w-87.5 shrink-0 h-full border-r border-border bg-secondary/5 z-20 overflow-hidden">
@@ -69,7 +69,7 @@ export default function SimpleMode() {
       </aside>
 
       {/* Center: Live Preview Area */}
-      <main className="h-[40dvh] lg:h-full lg:flex-1 bg-secondary/5 relative flex flex-col overflow-hidden min-w-0 z-10 border-b border-border lg:border-none">
+      <main className="h-[45dvh] min-h-[200px] sm:h-[50dvh] lg:h-full lg:flex-1 bg-secondary/5 relative flex flex-col overflow-hidden min-w-0 z-10 border-b border-border lg:border-none">
         {/* Background Gradients for Depth */}
         <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary blur-[120px]" />
@@ -128,24 +128,24 @@ export default function SimpleMode() {
         <div className="flex border-b border-border shrink-0 shadow-sm">
           <button 
             onClick={() => setMobileTab("presets")}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${
+            className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3 text-[11px] sm:text-xs font-bold transition-colors ${
               mobileTab === "presets" 
                 ? "text-primary border-b-2 border-primary bg-primary/5" 
                 : "text-muted-foreground hover:bg-secondary/20"
             }`}
           >
-            <LayoutGrid className="w-4 h-4" />
+            <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Presets
           </button>
           <button 
             onClick={() => setMobileTab("customize")}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${
+            className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-3 text-[11px] sm:text-xs font-bold transition-colors ${
               mobileTab === "customize" 
                 ? "text-primary border-b-2 border-primary bg-primary/5" 
                 : "text-muted-foreground hover:bg-secondary/20"
             }`}
           >
-            <LayoutPanelLeft className="w-4 h-4" />
+            <LayoutPanelLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Customize
           </button>
         </div>

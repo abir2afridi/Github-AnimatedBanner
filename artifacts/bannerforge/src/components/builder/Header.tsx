@@ -17,6 +17,7 @@ import {
   Layout,
   Layers,
   Info,
+  MoreHorizontal,
 } from "lucide-react";
 import { useTheme } from "../theme-provider";
 import { useBuilder } from "../../store/builder";
@@ -66,7 +67,6 @@ export function Header({ minimal, className }: HeaderProps) {
 
   const onShare = async () => {
     if (mode === "simple") {
-      // In simple mode, sharing is handled by the hash already, but we can copy the link
       const url = window.location.href;
       if (await copyText(url)) {
         setShared(true);
@@ -110,8 +110,8 @@ export function Header({ minimal, className }: HeaderProps) {
   );
 
   return (
-    <header className={"h-14 shrink-0 border-b flex items-center justify-between px-4 gap-2 " + (minimal ? "border-[#0066FF]/20 bg-card" : "border-border bg-sidebar") + (className ? " " + className : "")}>
-      <div className="flex items-center gap-3 min-w-0">
+    <header className={"h-14 shrink-0 border-b flex items-center justify-between px-1.5 sm:px-4 gap-1 sm:gap-2 " + (minimal ? "border-[#0066FF]/20 bg-card" : "border-border bg-sidebar") + (className ? " " + className : "")}>
+      <div className="flex items-center gap-1 sm:gap-3 min-w-0">
         <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <div className="w-10 h-10 shrink-0">
             <DotLottieReact
@@ -132,10 +132,10 @@ export function Header({ minimal, className }: HeaderProps) {
 
         {/* Mode Switcher */}
         {!minimal && (
-          <div className="ml-4 flex p-0.5 bg-secondary/50 rounded-lg border border-border">
+          <div className="ml-1 sm:ml-4 flex p-0.5 bg-secondary/50 rounded-lg border border-border">
             <button
               onClick={() => setMode("simple")}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-3 py-1 rounded-md text-[10px] sm:text-xs font-medium transition-all ${
                 mode === "simple"
                   ? "bg-background text-primary shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -146,7 +146,7 @@ export function Header({ minimal, className }: HeaderProps) {
             </button>
             <button
               onClick={() => setMode("svg")}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-3 py-1 rounded-md text-[10px] sm:text-xs font-medium transition-all ${
                 mode === "svg"
                   ? "bg-background text-primary shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -159,10 +159,11 @@ export function Header({ minimal, className }: HeaderProps) {
         )}
       </div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5 sm:gap-1">
         {/* ── Builder controls (hidden in minimal mode) ── */}
         {!minimal && (
           <>
+            {/* Desktop-only: Size dropdown */}
             {mode === "svg" && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -200,12 +201,13 @@ export function Header({ minimal, className }: HeaderProps) {
 
             <div className="w-px h-6 bg-border mx-1 hidden md:block" />
 
+            {/* Desktop-only: Undo/Redo */}
             {mode === "svg" && (
               <>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 px-2"
+                  className="h-8 px-2 hidden sm:inline-flex"
                   disabled={!canUndo}
                   onClick={undo}
                   title="Undo (Ctrl+Z)"
@@ -215,7 +217,7 @@ export function Header({ minimal, className }: HeaderProps) {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 px-2"
+                  className="h-8 px-2 hidden sm:inline-flex"
                   disabled={!canRedo}
                   onClick={redo}
                   title="Redo (Ctrl+Y)"
@@ -225,19 +227,71 @@ export function Header({ minimal, className }: HeaderProps) {
               </>
             )}
             
+            {/* Mobile More menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="sm" variant="ghost" className="h-8 w-8 px-0 sm:hidden" title="More options">
+                  <MoreHorizontal className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {mode === "svg" && (
+                  <>
+                    <DropdownMenuItem onClick={undo} disabled={!canUndo}>
+                      <Undo2 className="w-3.5 h-3.5 mr-2" /> Undo
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={redo} disabled={!canRedo}>
+                      <Redo2 className="w-3.5 h-3.5 mr-2" /> Redo
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
+                <DropdownMenuItem onClick={handleReset}>
+                  <RotateCcw className="w-3.5 h-3.5 mr-2" /> Reset
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleRandomize}>
+                  <Shuffle className="w-3.5 h-3.5 mr-2" /> Surprise me
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onShare}>
+                  {shared ? <Check className="w-3.5 h-3.5 mr-2 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5 mr-2" />}
+                  {shared ? "Copied!" : "Share"}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/about" className="flex items-center">
+                    <Info className="w-3.5 h-3.5 mr-2" /> About
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a href="https://github.com" target="_blank" rel="noreferrer" className="flex items-center">
+                    <Github className="w-3.5 h-3.5 mr-2" /> GitHub
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-[10px] text-muted-foreground font-mono">
+                  {mode === "svg" ? `${params.width}×${params.height}` : ''}
+                </DropdownMenuLabel>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Desktop: Reset */}
             <Button
               size="sm"
               variant="ghost"
-              className="h-8 px-2"
+              className="h-8 px-2 hidden sm:inline-flex"
               onClick={handleReset}
               title="Reset"
             >
               <RotateCcw className="w-4 h-4" />
             </Button>
+
+            {/* Desktop: Randomize */}
             <Button
               size="sm"
               variant="ghost"
-              className="h-8 px-2.5 gap-1.5 text-accent"
+              className="h-8 px-2.5 gap-1.5 text-accent hidden sm:inline-flex"
               onClick={handleRandomize}
               title="Surprise me (R)"
             >
@@ -245,10 +299,11 @@ export function Header({ minimal, className }: HeaderProps) {
               <span className="text-xs hidden sm:inline">Surprise me</span>
             </Button>
 
+            {/* Desktop: Share */}
             <Button
               size="sm"
               variant="ghost"
-              className="h-8 px-2.5 gap-1.5"
+              className="h-8 px-2.5 gap-1.5 hidden sm:inline-flex"
               onClick={onShare}
               title="Copy a shareable builder link"
             >
@@ -260,6 +315,7 @@ export function Header({ minimal, className }: HeaderProps) {
               <span className="text-xs hidden sm:inline">{shared ? "Copied" : "Share"}</span>
             </Button>
 
+            {/* Desktop: Keyboard shortcuts */}
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -286,17 +342,20 @@ export function Header({ minimal, className }: HeaderProps) {
           </>
         )}
 
-        <Link href="/about">
-          <Button
-            size="sm"
-            variant="ghost"
-            className="h-8 px-2.5 gap-1.5"
-            title="About BannerForge"
-          >
-            <Info className="w-3.5 h-3.5" />
-            <span className="text-xs hidden sm:inline">About</span>
-          </Button>
-        </Link>
+        {/* Desktop About */}
+        {!minimal && (
+          <Link href="/about" className="hidden sm:inline-flex">
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-8 px-2.5 gap-1.5"
+              title="About BannerForge"
+            >
+              <Info className="w-3.5 h-3.5" />
+              <span className="text-xs hidden sm:inline">About</span>
+            </Button>
+          </Link>
+        )}
 
         <Button
           size="sm"
@@ -314,15 +373,17 @@ export function Header({ minimal, className }: HeaderProps) {
           <span className="sr-only">Toggle theme</span>
         </Button>
 
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noreferrer"
-          className="ml-1 inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-border text-xs text-muted-foreground hover:text-foreground hover-elevate"
-        >
-          <Github className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">GitHub</span>
-        </a>
+        {!minimal && (
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-1 inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-border text-xs text-muted-foreground hover:text-foreground hover-elevate hidden sm:inline-flex"
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">GitHub</span>
+          </a>
+        )}
       </div>
     </header>
   );

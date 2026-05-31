@@ -106,7 +106,7 @@ export function PresetsTab() {
 
       {/* Grid Content with Padding */}
       <div className="p-4">
-        <div className="grid grid-cols-2 gap-3 pb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pb-4">
         {filteredPresets.map((preset, index) => (
           <button
             key={preset.id}
