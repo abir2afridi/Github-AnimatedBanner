@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import {
   Undo2,
@@ -15,7 +16,8 @@ import {
   Sun,
   Monitor,
   Layout,
-  Layers
+  Layers,
+  Info,
 } from "lucide-react";
 import { useTheme } from "../theme-provider";
 import { useBuilder } from "../../store/builder";
@@ -106,21 +108,23 @@ export function Header() {
   return (
     <header className="h-14 shrink-0 border-b border-border bg-sidebar flex items-center justify-between px-4 gap-2">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="w-10 h-10 shrink-0">
-          <DotLottieReact
-            src="https://lottie.host/85ec5298-49d5-4c8d-9d65-bb087705e154/itvccM1zkB.lottie"
-            loop
-            autoplay
-          />
-        </div>
-        <div className="min-w-0">
-          <div className="text-sm font-semibold tracking-tight leading-tight truncate">
-            BannerForge
+        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="w-10 h-10 shrink-0">
+            <DotLottieReact
+              src="https://lottie.host/85ec5298-49d5-4c8d-9d65-bb087705e154/itvccM1zkB.lottie"
+              loop
+              autoplay
+            />
           </div>
-          <div className="text-[10px] text-muted-foreground leading-tight hidden sm:block">
-            GitHub README banner generator
+          <div className="min-w-0">
+            <div className="text-sm font-semibold tracking-tight leading-tight truncate">
+              BannerForge
+            </div>
+            <div className="text-[10px] text-muted-foreground leading-tight hidden sm:block">
+              GitHub README banner generator
+            </div>
           </div>
-        </div>
+        </Link>
 
         {/* Mode Switcher */}
         <div className="ml-4 flex p-0.5 bg-secondary/50 rounded-lg border border-border">
@@ -246,6 +250,18 @@ export function Header() {
           )}
           <span className="text-xs hidden sm:inline">{shared ? "Copied" : "Share"}</span>
         </Button>
+
+        <Link href="/about">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-8 px-2.5 gap-1.5"
+            title="About BannerForge"
+          >
+            <Info className="w-3.5 h-3.5" />
+            <span className="text-xs hidden sm:inline">About</span>
+          </Button>
+        </Link>
 
         <Popover>
           <PopoverTrigger asChild>
