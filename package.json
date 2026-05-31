@@ -14,6 +14,10 @@
     "typecheck": "npm run typecheck:libs && npm run typecheck --workspaces --if-present"
   },
   "private": true,
+  "pnpm": {
+    "onlyBuiltDependenciesFile": "pnpm-workspace.yaml",
+    "onlyBuiltDependencies": ["esbuild", "@esbuild/linux-x64", "@esbuild/win32-x64"]
+  },
   "devDependencies": {
     "@vercel/node": "^5.3.7",
     "@types/node": "^25.3.3",
