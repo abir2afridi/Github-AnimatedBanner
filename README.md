@@ -5,10 +5,14 @@ A GitHub README banner generator that produces animated SVG banners via a URL AP
 ## ✨ Key Features
 
 - **🚀 Performance-First**: Zero runtime dependencies in the generator library. Works identically on the server and in the browser.
-- **🎨 Infinite Customization**: 35+ shape types, 20+ animations, and 15+ color presets.
+- **🎨 Infinite Customization**: 35+ shape types, 20+ animations, and 15+ color presets, plus 23 `classic-header-*` presets with decorations.
 - **⚡ Live Preview**: The builder UI provides a byte-identical preview of the API output.
-- **📱 Responsive Design**: Optimized for all screen sizes.
+- **📱 Responsive Design**: Optimized for all screen sizes with responsive scaling (`fitScale`).
 - **🔗 Seamless Integration**: Simply copy the URL or Markdown and paste it into your GitHub README.
+- **🖼️ Decorations**: 24 PNG decoration assets with left/right/both placement support.
+- **🔄 Smart Theme**: Click-to-cycle theme toggle — dark → light → system.
+- **👤 Developer Profile**: Cyber-Brutalist profile page at `/developer` with contribution heatmap, language donut chart, live activity feed, and repo matrix.
+- **ℹ️ About Page**: Feature showcase with FAQ accordion at `/about`.
 
 ## Architecture
 
@@ -30,7 +34,15 @@ This is a `pnpm` monorepo with three artifacts and one shared library:
 
 - `artifacts/api-server` — Express 5 server. The `/api/banner` GET route returns `image/svg+xml` (1-hour browser cache, 1-day s-max-age) so the URL can be embedded directly in a GitHub README.
 
-- `artifacts/bannerforge` — React + Vite + Tailwind v4 + shadcn/ui frontend (the builder). Three-panel layout: control tabs on the left, live preview in the middle, embed/download on the right. State managed by Zustand with undo/redo history.
+- `artifacts/bannerforge` — React + Vite + Tailwind v4 + shadcn/ui frontend (the builder). Dual-mode layout:
+  - **Simple Mode** — Three-column layout: preset thumbnails (left), live preview (center), controls panel (right). Collapses to single column on mobile with bottom tab switcher. Left sidebar footer links to `/developer`.
+  - **Advanced Mode** — Three-panel layout: control tabs on the left, live preview in the middle, embed/download on the right.
+  - **23 classic-header presets** — Auto-generated from `presets.json` with decoration, font, and alignment mapping.
+  - **29 shared SVG patterns** — Matched to original project pattern IDs.
+  - **Decoration system** — Left/right/both placement via `decorationSide`, 24 PNG assets in `public/images/decorations/`.
+  - **Pages**: `/about` (feature showcase + FAQ) and `/developer` (Cyber-Brutalist profile with stats, language chart, contribution heatmap, activity feed).
+  - **Theme toggle** — Single cycling button (dark → light → system).
+  - State managed by Zustand with undo/redo history.
 
 - `artifacts/mockup-sandbox` — Component preview sandbox (canvas iframe target).
 

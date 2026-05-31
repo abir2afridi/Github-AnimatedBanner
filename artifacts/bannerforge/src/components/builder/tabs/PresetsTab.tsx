@@ -119,7 +119,7 @@ export function PresetsTab() {
                     className="w-full block brightness-[0.9] group-hover:brightness-100 transition-all"
                     style={{ aspectRatio: "600 / 140" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="px-3 py-2 flex items-center justify-between">
                   <div className="flex items-center gap-3">

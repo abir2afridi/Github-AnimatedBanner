@@ -135,7 +135,7 @@ export function SimpleControlPanel() {
         {activeTab === "export" && <SimpleOutputPanel />}
       </div>
 
-      <div className="p-4 border-t border-border bg-gradient-to-br from-secondary/30 to-background">
+      <div className="p-4 border-t border-border bg-linear-to-br from-secondary/30 to-background">
         <Button
           onClick={handleCopy}
           variant="outline"

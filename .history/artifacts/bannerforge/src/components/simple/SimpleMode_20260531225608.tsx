@@ -48,10 +48,10 @@ export default function SimpleMode() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex flex-col lg:flex-row h-dvh w-full overflow-hidden bg-background"
+      className="flex flex-col lg:flex-row h-[100dvh] w-full overflow-hidden bg-background"
     >
       {/* Left: Presets Panel (Desktop) */}
-      <aside className="hidden lg:flex flex-col w-75 xl:w-87.5 shrink-0 h-full border-r border-border bg-secondary/5 z-20 overflow-hidden">
+      <aside className="hidden lg:flex flex-col w-[300px] xl:w-[350px] shrink-0 h-full border-r border-border bg-secondary/5 z-20 overflow-hidden">
         <div className="p-4 border-b border-border bg-background flex items-center gap-2">
           <LayoutGrid className="w-4 h-4 text-primary" />
           <h2 className="text-sm font-bold uppercase tracking-wider">Presets</h2>
@@ -63,7 +63,7 @@ export default function SimpleMode() {
           href="/developer"
           className="shrink-0 px-4 py-2.5 border-t border-border bg-background/50 text-[10px] text-muted-foreground leading-relaxed hover:bg-primary/5 hover:text-foreground transition-colors block cursor-pointer"
         >
-          <div className="font-medium">BannerForge v2025.11.17</div>
+          <div className="font-medium">TPT-Tools v2025.11.17</div>
           <div>&copy; 2025 Abir Hasan Siam</div>
         </Link>
       </aside>
@@ -119,7 +119,7 @@ export default function SimpleMode() {
       </main>
 
       {/* Right Panel Header (Desktop) */}
-      <aside className="hidden lg:flex flex-col w-75 xl:w-87.5 shrink-0 h-full border-l border-border shadow-xl z-20 overflow-hidden">
+      <aside className="hidden lg:flex flex-col w-[300px] xl:w-[350px] shrink-0 h-full border-l border-border shadow-xl z-20 overflow-hidden">
         <SimpleControlPanel />
       </aside>
 

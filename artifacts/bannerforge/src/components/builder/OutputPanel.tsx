@@ -43,7 +43,7 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
         <pre className="p-3.5 text-[11px] overflow-x-auto text-zinc-300 font-mono leading-relaxed max-h-48 scrollbar-thin selection:bg-primary/30">
           <code>{code}</code>
         </pre>
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#0d1117] to-transparent pointer-events-none opacity-50" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-linear-to-l from-[#0d1117] to-transparent pointer-events-none opacity-50" />
       </div>
     </div>
   );

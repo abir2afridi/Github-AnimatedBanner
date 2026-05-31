@@ -57,7 +57,7 @@ export default function Builder() {
                   href="/developer"
                   className="shrink-0 px-4 py-2.5 border-t border-border bg-background/50 text-[10px] text-muted-foreground leading-relaxed hover:bg-primary/5 hover:text-foreground transition-colors block cursor-pointer"
                 >
-                  <div className="font-medium">BannerForge v2025.11.17</div>
+                  <div className="font-medium">TPT-Tools v2025.11.17</div>
                   <div>&copy; 2025 Abir Hasan Siam</div>
                 </Link>
               </aside>

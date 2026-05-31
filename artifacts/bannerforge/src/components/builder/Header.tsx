@@ -14,7 +14,6 @@ import {
   Keyboard,
   Moon,
   Sun,
-  Monitor,
   Layout,
   Layers,
   Info,
@@ -41,7 +40,12 @@ import { SIZE_PRESETS } from "../../lib/sizePresets";
 import { paramsToQuery } from "@workspace/banner-svg";
 import { toast } from "sonner";
 
-export function Header() {
+interface HeaderProps {
+  minimal?: boolean;
+  className?: string;
+}
+
+export function Header({ minimal, className }: HeaderProps) {
   const undo = useBuilder((s) => s.undo);
   const redo = useBuilder((s) => s.redo);
   const reset = useBuilder((s) => s.reset);
@@ -57,7 +61,7 @@ export function Header() {
   const simpleRandomize = useSimple((s) => s.randomize);
   const simpleReset = useSimple((s) => s.reset);
 
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [shared, setShared] = useState(false);
 
   const onShare = async () => {
@@ -106,7 +110,7 @@ export function Header() {
   );
 
   return (
-    <header className="h-14 shrink-0 border-b border-border bg-sidebar flex items-center justify-between px-4 gap-2">
+    <header className={"h-14 shrink-0 border-b flex items-center justify-between px-4 gap-2 " + (minimal ? "border-[#0066FF]/20 bg-card" : "border-border bg-sidebar") + (className ? " " + className : "")}>
       <div className="flex items-center gap-3 min-w-0">
         <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <div className="w-10 h-10 shrink-0">
@@ -127,129 +131,160 @@ export function Header() {
         </Link>
 
         {/* Mode Switcher */}
-        <div className="ml-4 flex p-0.5 bg-secondary/50 rounded-lg border border-border">
-          <button
-            onClick={() => setMode("simple")}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
-              mode === "simple"
-                ? "bg-background text-primary shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Layout className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Simple</span>
-          </button>
-          <button
-            onClick={() => setMode("svg")}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
-              mode === "svg"
-                ? "bg-background text-primary shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Advanced</span>
-          </button>
-        </div>
+        {!minimal && (
+          <div className="ml-4 flex p-0.5 bg-secondary/50 rounded-lg border border-border">
+            <button
+              onClick={() => setMode("simple")}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+                mode === "simple"
+                  ? "bg-background text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Layout className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Simple</span>
+            </button>
+            <button
+              onClick={() => setMode("svg")}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all ${
+                mode === "svg"
+                  ? "bg-background text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Advanced</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-1">
-        {mode === "svg" && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="h-8 px-2.5 gap-1.5 hidden md:inline-flex"
-                title="Banner size"
-              >
-                <Maximize className="w-3.5 h-3.5" />
-                <span className="text-xs">{currentSize?.label ?? "Custom"}</span>
-                <span className="text-[10px] text-muted-foreground font-mono">
-                  {params.width}×{params.height}
-                </span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>Banner size</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {SIZE_PRESETS.map((s) => (
-                <DropdownMenuItem
-                  key={s.id}
-                  onClick={() =>
-                    setParams((p) => ({ ...p, width: s.width, height: s.height }))
-                  }
-                  className="flex items-center justify-between"
-                >
-                  <span>{s.label}</span>
-                  <span className="text-[10px] text-muted-foreground font-mono">{s.hint}</span>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
-
-        <div className="w-px h-6 bg-border mx-1 hidden md:block" />
-
-        {mode === "svg" && (
+        {/* ── Builder controls (hidden in minimal mode) ── */}
+        {!minimal && (
           <>
+            {mode === "svg" && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-8 px-2.5 gap-1.5 hidden md:inline-flex"
+                    title="Banner size"
+                  >
+                    <Maximize className="w-3.5 h-3.5" />
+                    <span className="text-xs">{currentSize?.label ?? "Custom"}</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">
+                      {params.width}×{params.height}
+                    </span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>Banner size</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {SIZE_PRESETS.map((s) => (
+                    <DropdownMenuItem
+                      key={s.id}
+                      onClick={() =>
+                        setParams((p) => ({ ...p, width: s.width, height: s.height }))
+                      }
+                      className="flex items-center justify-between"
+                    >
+                      <span>{s.label}</span>
+                      <span className="text-[10px] text-muted-foreground font-mono">{s.hint}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            <div className="w-px h-6 bg-border mx-1 hidden md:block" />
+
+            {mode === "svg" && (
+              <>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-8 px-2"
+                  disabled={!canUndo}
+                  onClick={undo}
+                  title="Undo (Ctrl+Z)"
+                >
+                  <Undo2 className="w-4 h-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-8 px-2"
+                  disabled={!canRedo}
+                  onClick={redo}
+                  title="Redo (Ctrl+Y)"
+                >
+                  <Redo2 className="w-4 h-4" />
+                </Button>
+              </>
+            )}
+            
             <Button
               size="sm"
               variant="ghost"
               className="h-8 px-2"
-              disabled={!canUndo}
-              onClick={undo}
-              title="Undo (Ctrl+Z)"
+              onClick={handleReset}
+              title="Reset"
             >
-              <Undo2 className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4" />
             </Button>
             <Button
               size="sm"
               variant="ghost"
-              className="h-8 px-2"
-              disabled={!canRedo}
-              onClick={redo}
-              title="Redo (Ctrl+Y)"
+              className="h-8 px-2.5 gap-1.5 text-accent"
+              onClick={handleRandomize}
+              title="Surprise me (R)"
             >
-              <Redo2 className="w-4 h-4" />
+              <Shuffle className="w-3.5 h-3.5" />
+              <span className="text-xs hidden sm:inline">Surprise me</span>
             </Button>
+
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-8 px-2.5 gap-1.5"
+              onClick={onShare}
+              title="Copy a shareable builder link"
+            >
+              {shared ? (
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <Share2 className="w-3.5 h-3.5" />
+              )}
+              <span className="text-xs hidden sm:inline">{shared ? "Copied" : "Share"}</span>
+            </Button>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-8 px-2 hidden sm:inline-flex"
+                  title="Keyboard shortcuts"
+                >
+                  <Keyboard className="w-4 h-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-64 text-xs">
+                <div className="font-medium mb-2">Keyboard shortcuts</div>
+                <div className="space-y-1.5">
+                  <Row k="Ctrl/⌘ + Z" v="Undo" />
+                  <Row k="Ctrl/⌘ + Y" v="Redo" />
+                  <Row k="Ctrl/⌘ + Shift + Z" v="Redo" />
+                  <Row k="R" v="Surprise me" />
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
           </>
         )}
-        
-        <Button
-          size="sm"
-          variant="ghost"
-          className="h-8 px-2"
-          onClick={handleReset}
-          title="Reset"
-        >
-          <RotateCcw className="w-4 h-4" />
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="h-8 px-2.5 gap-1.5 text-accent"
-          onClick={handleRandomize}
-          title="Surprise me (R)"
-        >
-          <Shuffle className="w-3.5 h-3.5" />
-          <span className="text-xs hidden sm:inline">Surprise me</span>
-        </Button>
-
-        <Button
-          size="sm"
-          variant="ghost"
-          className="h-8 px-2.5 gap-1.5"
-          onClick={onShare}
-          title="Copy a shareable builder link"
-        >
-          {shared ? (
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
-          ) : (
-            <Share2 className="w-3.5 h-3.5" />
-          )}
-          <span className="text-xs hidden sm:inline">{shared ? "Copied" : "Share"}</span>
-        </Button>
 
         <Link href="/about">
           <Button
@@ -263,53 +298,21 @@ export function Header() {
           </Button>
         </Link>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-8 px-2 hidden sm:inline-flex"
-              title="Keyboard shortcuts"
-            >
-              <Keyboard className="w-4 h-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent align="end" className="w-64 text-xs">
-            <div className="font-medium mb-2">Keyboard shortcuts</div>
-            <div className="space-y-1.5">
-              <Row k="Ctrl/⌘ + Z" v="Undo" />
-              <Row k="Ctrl/⌘ + Y" v="Redo" />
-              <Row k="Ctrl/⌘ + Shift + Z" v="Redo" />
-              <Row k="R" v="Surprise me" />
-            </div>
-          </PopoverContent>
-        </Popover>
-        
-        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" variant="ghost" className="h-8 w-8 px-0">
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme("light")}>
-              <Sun className="mr-2 h-4 w-4" />
-              <span>Light</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
-              <Moon className="mr-2 h-4 w-4" />
-              <span>Dark</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")}>
-              <Monitor className="mr-2 h-4 w-4" />
-              <span>System</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-8 w-8 px-0 relative"
+          onClick={() => {
+            const order: Array<"dark" | "light" | "system"> = ["dark", "light", "system"];
+            const next = order[(order.indexOf(theme) + 1) % order.length];
+            setTheme(next);
+          }}
+          title={`Theme: ${theme} (click to cycle)`}
+        >
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
 
         <a
           href="https://github.com"
