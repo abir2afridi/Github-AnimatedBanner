@@ -1,0 +1,128 @@
+.toolbox-background {
+    box-sizing: border-box;
+
+    > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        &:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
+
+    .bg-color-selectors {
+        > div {
+            display: flex;
+            align-items: center;
+
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+        }
+
+        input {
+            margin-left: 5px;
+            cursor: pointer;
+            padding: 0;
+        }
+    }
+
+    .border-inputs {
+        div {
+            display: flex;
+            align-items: flex-start;
+
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            input {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .pattern-inputs {
+        div {
+            display: flex;
+            align-items: flex-start;
+
+            &:not(:last-child) {
+                margin-right: 15px;
+            }
+
+            &:first-child {
+                align-items: center;
+            }
+
+            #pattern-color-selector {
+                padding: 0;
+            }
+
+            input {
+                margin-left: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .patterns-buttons {
+        max-width: 550px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 70px);
+        gap: 5px;
+
+        button {
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all ease-in-out 300ms;
+
+            img {
+                width: 100%;
+                max-width: 55px;
+                max-height: 55px;
+            }
+
+            &:hover {
+                box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.25);
+            }
+
+            &.selected {
+                border: solid white 2px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .toolbox-background {
+        .border-inputs {
+            > div {
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        .pattern-inputs {
+            input {
+                &:not(:last-child) {
+                    margin-bottom: 15px;
+                }
+            }
+        }
+
+        // .patterns-buttons {
+        //     button {
+        //         margin-bottom: 5px;
+        //     }
+        // }
+    }
+}

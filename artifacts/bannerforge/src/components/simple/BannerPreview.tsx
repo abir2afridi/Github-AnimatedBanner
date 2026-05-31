@@ -41,12 +41,22 @@ export function BannerPreview({ config: propConfig }: BannerPreviewProps) {
     fast: "15s",
   };
 
-  const decorationPos =
-    config.decorationAlign === "left"
-      ? { left: 20, right: "auto" }
-      : config.decorationAlign === "center"
-        ? { left: "50%", right: "auto", transform: "translateX(-50%)" }
-        : { right: 20, left: "auto" };
+  const showRight = config.decorationSide === "right" || config.decorationSide === "both";
+  const showLeft = config.decorationSide === "left" || config.decorationSide === "both";
+
+  const decorationFilter =
+    config.bgColor.toLowerCase() === "#ffffff" && !Object.keys(colorfulDecorations).includes(config.decoration || "")
+      ? "invert(1)"
+      : "none";
+
+  const decorationStyle: React.CSSProperties = {
+    position: "absolute",
+    bottom: 0,
+    height: config.decorationSize,
+    opacity: config.decorationOpacity,
+    pointerEvents: "none",
+    zIndex: 0,
+  };
 
   return (
     <div
@@ -91,22 +101,27 @@ export function BannerPreview({ config: propConfig }: BannerPreviewProps) {
         />
       )}
 
-      {decorationSrc && (
+      {decorationSrc && showRight && (
         <img
           src={decorationSrc}
           alt=""
           style={{
-            position: "absolute",
-            bottom: 0,
-            height: config.decorationSize,
-            opacity: config.decorationOpacity,
-            pointerEvents: "none",
-            zIndex: 0,
-            filter: 
-              config.bgColor.toLowerCase() === "#ffffff" && !Object.keys(colorfulDecorations).includes(config.decoration || "")
-                ? "invert(1)" 
-                : "none",
-            ...decorationPos,
+            ...decorationStyle,
+            right: config.padding,
+            left: "auto",
+            filter: decorationFilter,
+          }}
+        />
+      )}
+      {decorationSrc && showLeft && (
+        <img
+          src={decorationSrc}
+          alt=""
+          style={{
+            ...decorationStyle,
+            left: config.padding,
+            right: "auto",
+            filter: decorationFilter,
           }}
         />
       )}

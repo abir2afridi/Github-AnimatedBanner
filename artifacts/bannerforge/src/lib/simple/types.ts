@@ -22,7 +22,7 @@ export interface BannerConfig {
   decoration: string | null;
   decorationSize: number;
   decorationOpacity: number;
-  decorationAlign: "left" | "right" | "center";
+  decorationSide: "left" | "right" | "both";
   animation: "none" | "slow" | "medium" | "fast";
   glassmorphism: boolean;
   miniature: boolean;
@@ -52,7 +52,7 @@ export const DEFAULT_CONFIG: BannerConfig = {
   decoration: null,
   decorationSize: 120,
   decorationOpacity: 0.8,
-  decorationAlign: "right",
+  decorationSide: "both",
   animation: "none",
   glassmorphism: false,
   miniature: false,

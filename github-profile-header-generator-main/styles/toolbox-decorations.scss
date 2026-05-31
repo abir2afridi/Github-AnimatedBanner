@@ -1,0 +1,80 @@
+.toolbox-decorations {
+    box-sizing: border-box;
+    max-width: 550px;
+    margin: auto;
+
+    > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        &:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    }
+
+    .decorations-buttons {
+        button {
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all ease-in-out 300ms;
+
+            img {
+                max-width: 50px;
+                max-height: 50px;
+                // border-radius: var(--input-border-radius);
+            }
+
+            &:hover {
+                box-shadow: 0px 0px 5px 2px rgba(255, 255, 255, 0.25);
+            }
+
+            &.selected {
+                border: solid white 2px;
+            }
+        }
+    }
+
+    .decorations-upload {
+        flex-direction: column;
+
+        input {
+            margin-top: 5px;
+        }
+
+        .myoctocats-tip {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 20px;
+            // border: 2px solid rgb(255, 255, 255, 0.5);
+            border-radius: var(--input-border-radius);
+            font-size: 0.9rem;
+            // text-transform: uppercase;
+            // text-align: center;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.15);
+
+            a {
+                font-weight: 700;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .toolbox-decorations {
+        .decorations-buttons {
+            button {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

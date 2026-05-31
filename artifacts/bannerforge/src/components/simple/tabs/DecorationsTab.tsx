@@ -1,7 +1,7 @@
 import { useSimple } from "../../../store/simple";
 import { LabelSlider } from "../../builder/Slider";
 import { decorations, colorfulDecorations, allDecorations } from "../../../lib/simple/decorations";
-import { Ban, Upload, X, Palette, Sparkles, Search } from "lucide-react";
+import { Ban, Upload, X, Palette, Sparkles, Search, AlignStartVertical, AlignEndVertical, Columns2 } from "lucide-react";
 import { useRef, useState, useMemo } from "react";
 import { Input } from "../../ui/input";
 
@@ -79,6 +79,29 @@ export function DecorationsTab() {
           onChange={(v) => update({ decorationOpacity: v / 100 })}
           unit="%"
         />
+        <div className="pt-2">
+          <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-1 pb-2 block">
+            Decoration Side
+          </label>
+          <div className="grid grid-cols-3 gap-1 p-1 bg-secondary/20 rounded-xl border border-border">
+            {(["left", "right", "both"] as const).map((side) => (
+              <button
+                key={side}
+                onClick={() => update({ decorationSide: side })}
+                className={`flex items-center justify-center gap-2 py-2 text-xs font-medium rounded-lg transition-all ${
+                  config.decorationSide === side
+                    ? "bg-background text-primary shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {side === "left" && <AlignStartVertical size={14} />}
+                {side === "right" && <AlignEndVertical size={14} />}
+                {side === "both" && <Columns2 size={14} />}
+                {side === "left" ? "Left" : side === "right" ? "Right" : "Both"}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="space-y-3">

@@ -414,6 +414,32 @@ export const decorations: Record<string, string> = {
 };
 
 export const colorfulDecorations: Record<string, string> = {
+  // --- Classic Decorations (from GitHub Profile Header Generator) ---
+  "my-octocat": "/images/decorations/my-octocat.png",
+  "github-mark": "/images/decorations/github-mark.png",
+  "code": "/images/decorations/code.png",
+  "dev-badge": "/images/decorations/dev-badge.png",
+  "dev-rainbow": "/images/decorations/dev-rainbow.png",
+  "dev-white": "/images/decorations/dev-white.png",
+  "binary-code": "/images/decorations/binary-code.png",
+  "coding": "/images/decorations/coding.png",
+  "coding-screen": "/images/decorations/coding-screen.png",
+  "css": "/images/decorations/css.png",
+  "dino": "/images/decorations/dino.png",
+  "dino-border": "/images/decorations/dino-border.png",
+  "html": "/images/decorations/html.png",
+  "js": "/images/decorations/js.png",
+  "programming": "/images/decorations/programming.png",
+  "tabs": "/images/decorations/tabs.png",
+  "terminal": "/images/decorations/terminal.png",
+  "terminal-circle": "/images/decorations/terminal-circle.png",
+  "headphones-cat-1": "/images/decorations/headphones-cat-1.png",
+  "headphones-cat-2": "/images/decorations/headphones-cat-2.png",
+  "octocat": "/images/decorations/octocat.png",
+  "idea": "/images/decorations/idea.png",
+  "rocket": "/images/decorations/rocket.png",
+  "apple": "/images/decorations/apple.png",
+
   // --- Core Brands (Social & Tech) ---
   google: "https://img.icons8.com/color/96/google-logo.png",
   facebook: "https://img.icons8.com/?size=96&id=uLWV5A9vXIPu&format=png",
@@ -510,7 +536,6 @@ export const colorfulDecorations: Record<string, string> = {
   elasticsearch: "https://img.icons8.com/color/96/elasticsearch.png",
 
   // --- Operating Systems ---
-  apple: "https://img.icons8.com/?size=96&id=S4KuN6l5Vsz6&format=png",
   windows: "https://img.icons8.com/color/96/windows-10.png",
   linux: "https://img.icons8.com/color/96/linux--v1.png",
   ubuntu: "https://img.icons8.com/color/96/ubuntu.png",
@@ -566,7 +591,6 @@ export const colorfulDecorations: Record<string, string> = {
   earth: "https://img.icons8.com/color/96/globe--v1.png",
 
   // --- Fun & Misc ---
-  rocket: "https://img.icons8.com/color/96/rocket.png",
   ufo: "https://img.icons8.com/color/96/ufo.png",
   alien: "https://img.icons8.com/color/96/alien.png",
   ghost: "https://img.icons8.com/color/96/ghost.png",
@@ -597,7 +621,7 @@ export const colorfulDecorations: Record<string, string> = {
   book: "https://img.icons8.com/color/96/book.png",
   pencil: "https://img.icons8.com/color/96/pencil.png",
   paint: "https://img.icons8.com/color/96/paint-palette.png",
-  idea: "https://img.icons8.com/color/96/idea.png",
+
   search: "https://img.icons8.com/color/96/search.png",
   settings: "https://img.icons8.com/color/96/settings.png",
   user: "https://img.icons8.com/color/96/user.png",

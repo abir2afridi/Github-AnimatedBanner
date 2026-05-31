@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { SimpleControlPanel } from "./SimpleControlPanel";
 import { BannerPreview } from "./BannerPreview";
-import { SimpleOutputPanel } from "./SimpleOutputPanel";
 import { motion } from "framer-motion";
 import { useSimple } from "../../store/simple";
 import { 
   Expand,
   LayoutPanelLeft,
-  Download,
   LayoutGrid
 } from "lucide-react";
 import { PresetsTab } from "./tabs/PresetsTab";
@@ -19,7 +17,7 @@ export default function SimpleMode() {
   
   const wrapRef = useRef<HTMLDivElement>(null);
   const [containerW, setContainerW] = useState(0);
-  const [mobileTab, setMobileTab] = useState<"edit" | "export">("edit");
+  const [mobileTab, setMobileTab] = useState<"presets" | "customize">("presets");
 
   useEffect(() => {
     hydrate();
@@ -40,11 +38,9 @@ export default function SimpleMode() {
       ? Math.min(1, (containerW - 80) / config.width)
       : 1;
   
-  const scale = config.miniature ? fitScale : 1;
+  const scale = config.miniature ? Math.min(fitScale, 0.7) : fitScale;
   const scaledHeight = config.height * scale;
   const scaledWidth = config.width * scale;
-
-
 
   return (
     <motion.div 
@@ -53,11 +49,11 @@ export default function SimpleMode() {
       exit={{ opacity: 0 }}
       className="flex flex-col lg:flex-row h-[100dvh] w-full overflow-hidden bg-background"
     >
-      {/* Left: Presets Panel (Always visible on Desktop) */}
-      <aside className={`hidden xl:flex flex-col w-[350px] shrink-0 h-full border-r border-border bg-secondary/5 z-20 order-1 overflow-hidden`}>
+      {/* Left: Presets Panel (Desktop) */}
+      <aside className="hidden lg:flex flex-col w-[300px] xl:w-[350px] shrink-0 h-full border-r border-border bg-secondary/5 z-20 overflow-hidden">
         <div className="p-4 border-b border-border bg-background flex items-center gap-2">
           <LayoutGrid className="w-4 h-4 text-primary" />
-          <h2 className="text-sm font-bold uppercase tracking-wider">Presets Library</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wider">Presets</h2>
         </div>
         <div className="flex-1 overflow-y-auto custom-scrollbar">
            <PresetsTab />
@@ -65,7 +61,7 @@ export default function SimpleMode() {
       </aside>
 
       {/* Center: Live Preview Area */}
-      <main className="h-[40dvh] lg:h-full lg:flex-1 bg-secondary/5 relative flex flex-col overflow-hidden shrink-0 order-1 lg:order-2 z-10 border-b border-border lg:border-none">
+      <main className="h-[40dvh] lg:h-full lg:flex-1 bg-secondary/5 relative flex flex-col overflow-hidden min-w-0 z-10 border-b border-border lg:border-none">
         {/* Background Gradients for Depth */}
         <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary blur-[120px]" />
@@ -114,28 +110,49 @@ export default function SimpleMode() {
         )}
       </main>
 
-      {/* Mobile/Tablet Tab Toggle (Visible on small screens) */}
-      <div className="flex lg:hidden bg-background border-b border-border z-20 shrink-0 shadow-sm order-2">
-        <button 
-          onClick={() => setMobileTab("edit")}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${mobileTab === 'edit' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-muted-foreground hover:bg-secondary/20'}`}
-        >
-          <LayoutGrid className="w-4 h-4" />
-          Presets
-        </button>
-        <button 
-          onClick={() => setMobileTab("export")}
-          className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${mobileTab === 'export' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-muted-foreground hover:bg-secondary/20'}`}
-        >
-          <LayoutPanelLeft className="w-4 h-4" />
-          Customize
-        </button>
-      </div>
-
-      {/* Right: Configuration & Export Panel */}
-      <aside className={`${mobileTab === "edit" ? "hidden" : "flex"} lg:flex flex-col w-full lg:w-[350px] shrink-0 lg:h-full border-l border-border shadow-xl z-20 order-3 lg:order-3 overflow-hidden`}>
+      {/* Right Panel Header (Desktop) */}
+      <aside className="hidden lg:flex flex-col w-[300px] xl:w-[350px] shrink-0 h-full border-l border-border shadow-xl z-20 overflow-hidden">
         <SimpleControlPanel />
       </aside>
+
+      {/* Mobile/Tablet Bottom Panel */}
+      <div className="flex lg:hidden flex-col flex-1 min-h-0 bg-background z-20">
+        <div className="flex border-b border-border shrink-0 shadow-sm">
+          <button 
+            onClick={() => setMobileTab("presets")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${
+              mobileTab === "presets" 
+                ? "text-primary border-b-2 border-primary bg-primary/5" 
+                : "text-muted-foreground hover:bg-secondary/20"
+            }`}
+          >
+            <LayoutGrid className="w-4 h-4" />
+            Presets
+          </button>
+          <button 
+            onClick={() => setMobileTab("customize")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 text-xs font-bold transition-colors ${
+              mobileTab === "customize" 
+                ? "text-primary border-b-2 border-primary bg-primary/5" 
+                : "text-muted-foreground hover:bg-secondary/20"
+            }`}
+          >
+            <LayoutPanelLeft className="w-4 h-4" />
+            Customize
+          </button>
+        </div>
+        <div className="flex-1 overflow-hidden">
+          {mobileTab === "presets" ? (
+            <div className="h-full overflow-y-auto custom-scrollbar">
+              <PresetsTab />
+            </div>
+          ) : (
+            <div className="h-full overflow-hidden">
+              <SimpleControlPanel />
+            </div>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
 }

@@ -1,7 +1,7 @@
 import { useSimple } from "../../../store/simple";
 import { LabelSlider } from "../../builder/Slider";
 import { ColorSwatch } from "../../builder/ColorSwatch";
-import { patterns } from "../../../lib/simple/patterns";
+import { patterns, getPatternDefaultSize } from "../../../lib/simple/patterns";
 import { Ban, Search, X } from "lucide-react";
 import { useState, useMemo } from "react";
 import { Input } from "../../ui/input";
@@ -159,7 +159,7 @@ export function BackgroundTab() {
             return (
               <button
                 key={key}
-                onClick={() => update({ pattern: key })}
+                onClick={() => update({ pattern: key, patternSize: getPatternDefaultSize(key) })}
                 title={key}
                 className={`aspect-square rounded-xl border transition-all overflow-hidden relative group ${
                   config.pattern === key
